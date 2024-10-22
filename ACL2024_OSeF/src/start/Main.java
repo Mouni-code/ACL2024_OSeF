@@ -26,6 +26,7 @@ public class Main {
 		GameEngineGraphical engine = new GameEngineGraphical(game, painter, controller);
 		engine.run();
 	}*/
+	//Test du jeu v.0
 
     public static void main(String[] args) {
         Hero hero = new Hero(0, 0);
