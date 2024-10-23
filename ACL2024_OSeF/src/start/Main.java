@@ -1,14 +1,12 @@
 package start;
 
-import model.PacmanPainter;
 
 import java.util.Scanner;
 
 import engine.GameEngineGraphical;
-import model.PacmanController;
-import model.PacmanGame;
-import model.Hero;
-import model.Position;
+import model.*;
+
+import java.util.List ;//oui
 
 /**
  * lancement du moteur avec le jeu
@@ -30,10 +28,15 @@ public class Main {
 
     public static void main(String[] args) {
         Hero hero = new Hero(0, 0);
+        /*Labyrinthe obj = new Labyrinthe("C:\\Users\\gabk3\\OneDrive\\Documents\\Laby") ;
+        obj.setNiveau(2) ;
+        obj.afficherLabyrinthe() ;
+        */
+        
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Départ du héros en " + hero.getPosition());
+        System.out.println("Départ du héros en " + hero.getPosition()) ;
 
-        while (true) {
+        while (true) {      //tu mets les directions une par une 
             System.out.println("Dans quel sens le héros doit se déplacer ? (UP, DOWN, LEFT, RIGHT) : ");
             String direction = scanner.nextLine();
             hero.move(direction);
