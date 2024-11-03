@@ -6,7 +6,7 @@ import java.util.Scanner;
 import engine.GameEngineGraphical;
 import model.*;
 
-import java.util.List ;//oui
+import java.util.List ;
 
 /**
  * lancement du moteur avec le jeu
