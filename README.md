@@ -47,6 +47,6 @@ Le jeu se lancera en mode console, et vous pourrez contrôler le héros en entra
 - Objectif : Explorez chaque labyrinthe, gagnez de l'EXP, trouvez des trésors et de la magie, et battez les monstres qui s'y trouvent.
 - Progression : À la fin de chaque labyrinthe, si vous avez accumulé suffisamment d'expérience et de magie, vous pouvez accéder au labyrinthe suivant. Dans le dernier labyrinthe, affrontez le monstre final pour sauver la princesse.
 ## À venir
-Combats améliorés : Système de combat avec les monstres.
-Gains d'EXP et objets : Possibilité de gagner des objets, trésors, et magie pour améliorer les capacités du héros.
-Interface graphique : Une version graphique du jeu pour une expérience utilisateur plus immersive.
+- Combats améliorés : Système de combat avec les monstres.
+- Gains d'EXP et objets : Possibilité de gagner des objets, trésors, et magie pour améliorer les capacités du héros.
+- Interface graphique : Une version graphique du jeu pour une expérience utilisateur plus immersive.
