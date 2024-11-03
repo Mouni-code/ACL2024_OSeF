@@ -1,16 +1,12 @@
 package model;
 
-public class Hero {
-    private Position position;
+public class Hero extends Character {
 
     public Hero(int startX, int startY) {
-        this.position = new Position(startX, startY);
+        super(startX, startY);
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
+    @Override
     public void move(String direction) {
         switch (direction.trim().toUpperCase()) {
             case "UP":
