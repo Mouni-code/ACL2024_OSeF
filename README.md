@@ -1,8 +1,8 @@
-#### Jeu de Labyrinthe - Version Texte (v0)
+# Jeu de Labyrinthe - Version Texte (v0)
 ## Description du Projet
 Ce projet est un jeu de labyrinthe en version texte où un héros, en quête de sauver sa princesse, traverse plusieurs labyrinthes pour la retrouver. Dans cette première version (v0), le jeu permet de contrôler le mouvement du héros à l'aide d'un fichier JAR exécutable.
 
-##P rincipe du Jeu
+## Principe du Jeu
 L'objectif principal du jeu est de guider le héros à travers quatre labyrinthes. Dans chaque labyrinthe, le héros doit :
 - Combattre des monstres pour passer au labyrinthe suivant.
 - Accumuler de l'expérience (EXP) et de la magie pour renforcer ses capacités de combat.
@@ -13,10 +13,10 @@ L'objectif principal du jeu est de guider le héros à travers quatre labyrinthe
 - Version actuelle (v0) : Version texte. Elle permet de déplacer le héros dans le labyrinthe en utilisant des commandes directionnelles.
 - Version future : Une version avec interface graphique est envisagée, ainsi que des mécaniques de combat et des éléments supplémentaires de gameplay.
 ## Installation et Exécution du Jeu
-# Prérequis
+### Prérequis
 - Java 17 (ou version ultérieure) doit être installé sur votre machine.
 - Maven (pour la compilation du projet si nécessaire).
-# Compilation du Projet
+### Compilation du Projet
 - Clonez le projet depuis le dépôt GitHub :
 
 ```bash
