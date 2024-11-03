@@ -1,4 +1,4 @@
-#Etat d’avancement :
+# Etat d’avancement :
 
 •    Version texte du jeu créée ( voir backlog2_jeu_version_texte.png)
  

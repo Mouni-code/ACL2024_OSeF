@@ -1,4 +1,4 @@
-#Backlog-2 23/10/2024
+# Backlog-2 23/10/2024
 •    Tâche 1 : Créer la version graphique avec le labyrinthe :
     o    Adapter les 4 niveaux en version graphique
     o    Définir les classes enfants de la classe mère Character (héro, monstre et fantôme)
