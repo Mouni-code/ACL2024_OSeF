@@ -12,7 +12,7 @@ import java.util.ArrayList ;
 public class Labyrinthe {
     //private File fichierLabyrinthe; //les fichiers des lab
     private int niveau;
-    private List<List<String>> TousLesLaby = new ArrayList<>() ; //contenu de tous les labyrinthes selon les niveaux
+    public List<List<String>> TousLesLaby = new ArrayList<>() ; //contenu de tous les labyrinthes selon les niveaux
     Path dossier ;
 
     public Labyrinthe(String cheminDossier) { 
@@ -25,7 +25,7 @@ public class Labyrinthe {
         dossier = Paths.get(cheminDossier) ;
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dossier)){ //for in range les niv
             for ( Path fichier : stream ){
-                if( Files.isRegularFile(fichier)){
+                if( Files.isRegularFile(fichier) ){
                     List<String> contenuLabyrinthe = Files.readAllLines(fichier) ;
                     TousLesLaby.add(contenuLabyrinthe) ;
                 }
@@ -53,8 +53,6 @@ public class Labyrinthe {
                 }
                 return ;
             }
-            System.out.println("\n\nhm bizarre...\n\nTu t'es perdu aventurier ?\n") ;
-        }
         /*if (contenuLabyrinthe != null) {
             for (String ligne : contenuLabyrinthe) {
                 System.out.println(ligne);
@@ -63,4 +61,5 @@ public class Labyrinthe {
             System.out.println("Labyrinthe non chargé.");
         }*/
     }
+}
 }
