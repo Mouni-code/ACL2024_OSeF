@@ -37,8 +37,9 @@ public class Main {
         obj.setNiveau(2) ;
         obj.afficherLabyrinthe() ;
 
-        char[][] maze ;
-        for( int n = 0 ; n < obj.TousLesLaby.size() ; n++ ){
+        char[][] maze = null ;//remplir le maze : 
+
+        /*for( int n = 0 ; n < obj.TousLesLaby.size() ; n++ ){
             if( obj.TousLesLaby.get(n).get(0).equals("niv" + obj.getNiveau()) ){
                 for( int lgn = 1 ; lgn < obj.TousLesLaby.get(n).size() ; lgn++ ){
                     char[] var = obj.TousLesLaby.get(n).get(lgn).toCharArray() ; 
@@ -49,26 +50,26 @@ public class Main {
                 }
             }
         }
+        System.out.println(maze) ;*/
 
         
         for (int n = 0; n < obj.TousLesLaby.size(); n++) {
-        if (obj.TousLesLaby.get(n).get(0).equals("niv" + obj.getNiveau())) {
-            List<String> labyrinthe = obj.TousLesLaby.get(n);
-            int hauteur = labyrinthe.size() - 1; // -1 car la première ligne est le nom du niveau
-            int largeur = labyrinthe.get(1).length(); // On suppose que toutes les lignes ont la même longueur
+            if (obj.TousLesLaby.get(n).get(0).equals("niv" + obj.getNiveau())) {
+                List<String> labyrinthe = obj.TousLesLaby.get(n) ;
+                int hauteur = labyrinthe.size() - 1 ; // -1 car la première ligne est le nom du niveau
+                int largeur = labyrinthe.get(1).length() ; // On suppose que toutes les lignes ont la même longueur
         
-            maze = new char[hauteur][largeur];
+                maze = new char[hauteur][largeur] ;
         
-            for (int lgn = 1; lgn < labyrinthe.size() ; lgn++) {
-                String ligne = labyrinthe.get(lgn);
-                for (int col = 0; col < ligne.length() ; col++) {
-                    maze[lgn - 1][col] = ligne.charAt(col);
+                for (int lgn = 1 ; lgn < labyrinthe.size() ; lgn++) {
+                    String ligne = labyrinthe.get(lgn) ;
+                    for (int col = 0 ; col < ligne.length() ; col++) {
+                        maze[lgn -1][col] = ligne.charAt(col) ;
+                    }
                 }
+                break; // On a trouvé le bon labyrinthe, on peut sortir de la boucle
             }
-
-        break; // On a trouvé le bon labyrinthe, on peut sortir de la boucle
-    }
-}
+        }
 
         JFrame frame = new JFrame("Labyrinthe");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +78,7 @@ public class Main {
         LabyDess labyDess = new LabyDess(maze);
         
         // Définissez une taille fixe pour le panneau
-        labyDess.setPreferredSize(new Dimension(1400, 500)); // Par exemple, 400x400 pixels
+        labyDess.setPreferredSize(new Dimension(1400, 700)); // Par exemple, 400x400 pixels
         
         frame.add(labyDess);
         frame.pack(); // Ajuste la taille de la fenêtre au contenu
