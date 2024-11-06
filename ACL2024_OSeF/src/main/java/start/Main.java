@@ -34,24 +34,9 @@ public class Main {
 
     public static void main(String[] args) {
         Labyrinthe obj = new Labyrinthe("C:\\Users\\gabk3\\OneDrive\\Documents\\Laby") ;
-        obj.setNiveau(2) ;
-        obj.afficherLabyrinthe() ;
+        obj.setNiveau(0) ;
 
         char[][] maze = null ;//remplir le maze : 
-
-        /*for( int n = 0 ; n < obj.TousLesLaby.size() ; n++ ){
-            if( obj.TousLesLaby.get(n).get(0).equals("niv" + obj.getNiveau()) ){
-                for( int lgn = 1 ; lgn < obj.TousLesLaby.get(n).size() ; lgn++ ){
-                    char[] var = obj.TousLesLaby.get(n).get(lgn).toCharArray() ; 
-                    maze = new char[obj.TousLesLaby.get(n).size()][var.length];
-                    for( int k = 0 ; k < var.length ; k++ ){
-                        maze[lgn][k] = var[k] ;
-                    }
-                }
-            }
-        }
-        System.out.println(maze) ;*/
-
         
         for (int n = 0; n < obj.TousLesLaby.size(); n++) {
             if (obj.TousLesLaby.get(n).get(0).equals("niv" + obj.getNiveau())) {
@@ -86,18 +71,5 @@ public class Main {
         frame.setVisible(true);
 
     }
-
-
-        
-        /*public static...
-        Hero hero = new Hero(0, 0);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Départ du héros en " + hero.getPosition()) ;
-
-        while (true) {      //tu mets les directions une par une 
-            System.out.println("Dans quel sens le héros doit se déplacer ? (UP, DOWN, LEFT, RIGHT) : ");
-            String direction = scanner.nextLine();
-            hero.move(direction);
-            System.out.println("Position actuelle du héros : " + hero.getPosition());
-        }*/
+    //Test Aff Graphique 
 }
