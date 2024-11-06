@@ -23,6 +23,10 @@ public class LabyDess extends JPanel {
                         g.setColor(Color.BLACK);
                         g.fillRect(x, y, cellSize, cellSize);
                         break;
+                    case 'h':
+                        g.setColor(Color.GREEN);
+                        g.fillRect(x, y, cellSize, cellSize);
+                        break;
                     case ' ': // Chemin
                         g.setColor(Color.WHITE);
                         g.fillRect(x, y, cellSize, cellSize);
@@ -33,6 +37,18 @@ public class LabyDess extends JPanel {
                         break;
                     case 'T': // Piege
                         g.setColor(Color.RED);
+                        g.fillOval(x, y, cellSize, cellSize);
+                        break;
+                    case 'M' : //Marchand
+                        g.setColor(Color.ORANGE);
+                        g.fillOval(x, y, cellSize, cellSize);
+                        break;
+                    case 'S' : //Spawner
+                        g.setColor(Color.LIGHT_GRAY);
+                        g.fillOval(x, y, cellSize, cellSize);
+                        break;
+                    case 'L' :
+                        g.setColor(Color.BLUE);
                         g.fillOval(x, y, cellSize, cellSize);
                         break;
                     // Ajouter d'autres cases...
