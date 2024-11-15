@@ -1,0 +1,50 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MovingCharacterExample {
+
+    private static final int FRAME_WIDTH = 1920;
+    private static final int FRAME_HEIGHT = 1080;
+    private static final int CHARACTER_SIZE = 50; // Taille du personnage
+    private static int x = 100; // Position initiale en x
+    private static int y = 100; // Position initiale en y
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Jeu de Labyrinthe");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        
+        // Créez le panneau du labyrinthe
+        LabyDess labyDess = new LabyDess();
+        labyDess.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        frame.add(labyDess);
+        
+        // Créez un Timer pour animer le personnage
+        Timer timer = new Timer(16, new ActionListener() { // Environ 60 FPS
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                x += 5; // Déplace le personnage vers la droite
+                if (x > FRAME_WIDTH) { // Réinitialise la position si le personnage sort de l'écran
+                    x = -CHARACTER_SIZE;
+                }
+                labyDess.repaint(); // Redessine le panneau
+            }
+        });
+        timer.start(); // Démarre le timer
+        
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    // Panneau personnalisé pour dessiner le personnage
+    static class LabyDess extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.setColor(Color.RED); // Couleur du personnage
+            g.fillRect(x, y, CHARACTER_SIZE, CHARACTER_SIZE); // Dessine le personnage
+        }
+    }
+}

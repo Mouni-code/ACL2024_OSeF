@@ -1,6 +1,5 @@
 package model;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -10,15 +9,13 @@ import java.util.List;
 import java.util.ArrayList ;
 
 public class Labyrinthe {
-    //private File fichierLabyrinthe; //les fichiers des lab
     private int niveau;
     public List<List<String>> TousLesLaby = new ArrayList<>() ; //contenu de tous les labyrinthes selon les niveaux
     Path dossier ;
 
-    public Labyrinthe(String cheminDossier) { 
-        //this.fichierLabyrinthe = new File(cheminFichier);
+    public Labyrinthe(String cheminDossier) {
         this.niveau = 0 ; // toujours 0 au début ? Why not logique
-        chargerLabyrinthe(cheminDossier);
+        chargerLabyrinthe(cheminDossier) ;
     }
 
     private void chargerLabyrinthe(String cheminDossier) {
@@ -53,13 +50,6 @@ public class Labyrinthe {
                 }
                 return ;
             }
-        /*if (contenuLabyrinthe != null) {
-            for (String ligne : contenuLabyrinthe) {
-                System.out.println(ligne);
-            }
-        } else {
-            System.out.println("Labyrinthe non chargé.");
-        }*/
+        }
     }
-}
 }
