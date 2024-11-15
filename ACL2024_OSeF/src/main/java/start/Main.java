@@ -3,12 +3,7 @@ package start;
 
 import java.util.Scanner;
 
-import engine.GameEngineGraphical;
-import model.*;
-
-import java.util.List ;
-import javax.swing.*;
-import java.awt.*;
+import model.Hero;
 
 public class Main {
 
@@ -24,7 +19,20 @@ public class Main {
 		engine.run();
 	}*/
 	//Test du jeu v.0--------------------------------------------------------------------------------------
+    public static void main(String[] args) {
+        Hero hero = new Hero(0, 0);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Départ du héros en " + hero.getPosition()) ;
 
+        while (true) {      //tu mets les directions une par une 
+            System.out.println("Dans quel sens le héros doit se déplacer ? (UP, DOWN, LEFT, RIGHT) : ");
+            String direction = scanner.nextLine();
+            hero.move(direction);
+            System.out.println("Position actuelle du héros : " + hero.getPosition());
+        }
+        
+    }
+       
     /*public static void main(String[] args) {
         Labyrinthe obj = new Labyrinthe("C:\\Users\\gabk3\\OneDrive\\Documents\\Laby") ;
         obj.setNiveau(2) ;
@@ -32,7 +40,7 @@ public class Main {
         */
     //Test l'aff des laby.--------------------------------------------------------------------------------------
 
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
         Labyrinthe obj = new Labyrinthe("C:\\Users\\gabk3\\OneDrive\\Documents\\Laby") ;
         obj.setNiveau(0) ;
 
@@ -70,6 +78,6 @@ public class Main {
         frame.setResizable(true); // Empêche le redimensionnement de la fenêtre
         frame.setVisible(true);
 
-    }
+    }*/
     //Test Aff Graphique 
 }
