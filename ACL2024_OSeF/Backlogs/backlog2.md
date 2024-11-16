@@ -1,20 +1,18 @@
-# Etat d’avancement : 
+# Backlog-2 23/10/2024
+•    Tâche 1 : Créer la version graphique avec le labyrinthe :
+    o    Adapter les 4 niveaux en version graphique
+    o    Définir les classes enfants de la classe mère Character (héro, monstre et fantôme)
+    o    Création d’une classe case :
+                    
+                - Passage
+                - Magique
+                - Piège
+                - trésor
+•    Tâche 2 : Ajouter un ReadMe
+•    Tâche 3 : Créer le .jar du jeu 
+•    Tâche 4 : lire les commandes input clavier (haut, bas, gauche, droite)
 
-## 03/11 - review_sprint2.partie1:
-
-•    L'ajout des classes mères "Case" et "Character".
-
-•    L'ajout du fichier README.md
-
-•    L'ajout du fichier .jar 
-
-## 14/11 - review_sprint2.partie2:
-•    La lecture de cmd n'a pas pas été faite.
-
-•    La partie graphique a été faite mais n'a pas pu être push.
-
-•    Les pull ne générent pas les modifications faites.
-
-•    Les 4 niveaux ont été adapter en version graphique
-
-•    Le dossier labyrinthe qui comporte les niveaux a bien été push.
+Mouna : tache 3/1
+Gabriel : Tache 4/1
+Sabrine : Tache 2 /1
+Fatima ezzahrae : Tâche 1

@@ -26,6 +26,7 @@ git clone https://github.com/Mouni-code/ACL2024_OSeF.git
 
 ```bash
 cd ACL2024_OSeF
+cd ACL2024_OSeF
 ```
 - Compilez le projet et générez le fichier JAR :
 
