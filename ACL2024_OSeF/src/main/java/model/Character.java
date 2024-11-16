@@ -9,7 +9,7 @@ public abstract class Character {
         this.position = new Position(startX, startY);
     }
 
-    public Position getPosition() {
+    public Position getPosition() { 
         return position;
     }
 

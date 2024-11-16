@@ -5,32 +5,33 @@ import java.awt.*;
 import java.util.List ;
 
 public class LabyDess extends JPanel { 
-    private Labyrinthe obj ;
+    private int x, y ; // position en pixel
+    public Hero hero ;
+    private Labyrinthe labyrinthe ;
     private int niv ;
     private char[][] maze ; // labyrinthe actuel
-    private int cellSize = 25 ; // Taille de chaque cellule en pixels
+    private int cellSize = 20 ; // Taille de chaque cellule en pixels
 
     public LabyDess(Labyrinthe obj) { //prend un tableau 2D de caractères (char[][]) représentant le labyrinthe
-        this.obj = obj ;
+        this.x = 1*cellSize ; this.y = 4*cellSize ; //La position de départ est un nombre entier de fois la taille d'une case, mais plus tard on peut se déplacer pixels âr pixels
+        this.hero = new Hero(x, y) ;
+        this.labyrinthe = obj ;
         this.niv = obj.getNiveau() ;
         remplirMaze() ;
     }
-        /*
-         *Cette partie lit dans quel laby de "Labyrinthe" on est et le reecrit en char dans "maze"
-         * On peut en faire une classe
-        */
 
-    public char[][] remplirMaze(){
-        for (int n = 0 ; n < this.obj.TousLesLaby.size() ; n++) {
-            if (this.obj.TousLesLaby.get(n).get(0).equals("niv" + getNiveau())) {
-                List<String> labyrinthe = this.obj.TousLesLaby.get(n) ;
-                int hauteur = labyrinthe.size() -1 ; // -1 car la première ligne est le nom du niveau
-                int largeur = labyrinthe.get(1).length() ; // On suppose que toutes les lignes ont la même longueur
+    //Cette partie lit dans quel laby de "Labyrinthe" on est et le reecrit en char dans "maze"
+    public void remplirMaze(){
+        for (int n = 0 ; n < labyrinthe.TousLesLaby.size() ; n++) {
+            if ( labyrinthe.TousLesLaby.get(n).get(0).equals("niv" + getNiveau()) ) {
+                List<String> niv_nLabyrinthe = labyrinthe.TousLesLaby.get(n) ;
+                int hauteur = niv_nLabyrinthe.size() -1 ; // -1 car la première ligne est le nom du niveau
+                int largeur = niv_nLabyrinthe.get(1).length() ; // On suppose que toutes les lignes ont la même longueur
         
                 this.maze = new char[hauteur][largeur] ;
         
-                for (int lgn = 1 ; lgn < labyrinthe.size() ; lgn++) {
-                    String ligne = labyrinthe.get(lgn) ;
+                for (int lgn = 1 ; lgn <= hauteur ; lgn++) {
+                    String ligne = niv_nLabyrinthe.get(lgn) ;
                     for (int col = 0 ; col < ligne.length() ; col++) {
                         maze[lgn -1][col] = ligne.charAt(col) ;
                     }
@@ -38,6 +39,9 @@ public class LabyDess extends JPanel {
                 break; // On a trouvé le bon labyrinthe, on peut sortir de la boucle
             }
         }
+    }
+
+    public char[][] getMaze(){
         return maze ;
     }
 
@@ -47,7 +51,7 @@ public class LabyDess extends JPanel {
 
     public void setNiveau(int nivo){
         this.niv = nivo ;
-        this.maze = remplirMaze() ;
+        remplirMaze() ;
     }
 
     @Override
@@ -94,5 +98,9 @@ public class LabyDess extends JPanel {
                 }
             }
         }
+        //--------------
+        g.setColor(Color.RED); // Couleur du personnage
+        g.fillRect(hero.getPosition().getX(), hero.getPosition().getY(), cellSize, cellSize) ;
+        //--------------
     }
 }
