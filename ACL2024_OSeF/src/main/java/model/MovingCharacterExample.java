@@ -15,6 +15,7 @@ public class MovingCharacterExample {
         // Créez le panneau du labyrinthe
         LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF\\ACL2024_OSeF\\src\\main\\java\\model\\Laby")) ;
         labyDess.setNiveau(2);
+        int vitesse = labyDess.hero.getVit() ;
         labyDess.setPreferredSize(new Dimension(50*cellSize, 15*cellSize));
         
 
@@ -39,37 +40,38 @@ public class MovingCharacterExample {
 
                 switch( Direction.get(Direction.size() -1) ){
                     case 39 ://à droite
-                        labyDess.hero.getPosition().setX( pos_xHero + 7 ) ;
+                        labyDess.hero.getPosition().setX( pos_xHero + vitesse ) ;
                         caseX = pos_xHero/cellSize ;
                         caseY = pos_yHero/cellSize ;
-                        if ( labyDess.getMaze()[caseY][caseX + 1] != ' ' ) { //Quand on va à droite on regarde si la case d'après est un obstacle
+                        if ( labyDess.getMaze()[caseY][caseX + 1] != ' ' || labyDess.getMaze()[caseY + 1][caseX + 1] != ' ' ) { //Quand on va à droite on regarde si la case d'après est un obstacle
                             labyDess.hero.getPosition().setX( caseX*cellSize ) ;
                         }
                         break ;
                     case 37 ://à gauche
-                        labyDess.hero.getPosition().setX( pos_xHero -7 ) ;
+                        labyDess.hero.getPosition().setX( pos_xHero -vitesse ) ;
                         caseX = pos_xHero/cellSize ;
                         caseY = pos_yHero/cellSize ;
-                        if ( labyDess.getMaze()[caseY][caseX -1] != ' ' ) {
+                        if ( labyDess.getMaze()[caseY][caseX -1] != ' ' || labyDess.getMaze()[caseY + 1][caseX -1] != ' ') {
                             labyDess.hero.getPosition().setX( caseX*cellSize ) ;
                         }
                         break ;
                     case 38 ://en haut
-                        labyDess.hero.getPosition().setY( pos_yHero -7 ) ;
+                        labyDess.hero.getPosition().setY( pos_yHero -vitesse ) ;
                         caseX = pos_xHero/cellSize ;
                         caseY = pos_yHero/cellSize ;
-                        if ( labyDess.getMaze()[caseY -1][caseX] != ' ' ) {
+                        if ( labyDess.getMaze()[caseY -1][caseX] != ' ' || labyDess.getMaze()[caseY -1][caseX + 1] != ' ' ) {
                             labyDess.hero.getPosition().setY( caseY*cellSize ) ;
                         }
                         break ;
                     case 40 ://en bas
-                    labyDess.hero.getPosition().setY( pos_yHero + 7 ) ;
+                    labyDess.hero.getPosition().setY( pos_yHero + vitesse ) ;
                     caseX = pos_xHero/cellSize ;
                     caseY = pos_yHero/cellSize ;
-                    if ( labyDess.getMaze()[caseY + 1][caseX] != ' ' ) {
+                    if ( labyDess.getMaze()[caseY + 1][caseX] != ' ' || labyDess.getMaze()[caseY + 1][caseX + 1] != ' ') {
                         labyDess.hero.getPosition().setY( caseY*cellSize ) ;
                     }
                     break ;
+                    
                     default :
                         
                         break ;

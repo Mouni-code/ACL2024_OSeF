@@ -47,4 +47,4 @@ public class GlobalKeyListener implements KeyListener {
     public static void main(String[] args) {
         List<Integer> a = (new GlobalKeyListener()).direction ;
     }
-}
+}  

@@ -2,7 +2,6 @@ package model;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.util.List ;
 
 public class LabyDess extends JPanel { 
@@ -14,8 +13,8 @@ public class LabyDess extends JPanel {
     private int cellSize = 20 ; // Taille de chaque cellule en pixels
 
     public LabyDess(Labyrinthe obj) { //prend un tableau 2D de caractères (char[][]) représentant le labyrinthe
-        this.x = 1*cellSize ; this.y = 4*cellSize ; //La position de départ est un nombre entier de fois la taille d'une case, mais plus tard on peut se déplacer pixels âr pixels
-        this.hero = new Hero(x, y) ;
+        this.x = 0*cellSize ; this.y = 5*cellSize ; //La position de départ est un nombre entier de fois la taille d'une case, mais plus tard on peut se déplacer pixels âr pixels
+        this.hero = new Hero(x, y, 7) ;
         this.labyrinthe = obj ;
         this.niv = obj.getNiveau() ;
         remplirMaze() ;
@@ -101,7 +100,7 @@ public class LabyDess extends JPanel {
         }
         //--------------
         g.setColor(Color.RED); // Couleur du personnage
-        g.fillRect(hero.getPosition().getX(), hero.getPosition().getY(), cellSize, cellSize) ;
+        g.fillOval(hero.getPosition().getX(), hero.getPosition().getY(), cellSize, cellSize) ;
         //--------------
     } 
 }
