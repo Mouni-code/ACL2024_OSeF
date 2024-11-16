@@ -100,7 +100,7 @@ public class LabyDess extends JPanel {
         }
         //--------------
         g.setColor(Color.RED); // Couleur du personnage
-        g.fillOval(hero.getPosition().getX(), hero.getPosition().getY(), cellSize, cellSize) ;
+        g.fillRect(hero.getPosition().getX(), hero.getPosition().getY(), cellSize, cellSize) ;
         //--------------
     } 
 }
