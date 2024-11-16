@@ -2,6 +2,7 @@ package model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.util.List ;
 
 public class LabyDess extends JPanel { 
@@ -102,5 +103,5 @@ public class LabyDess extends JPanel {
         g.setColor(Color.RED); // Couleur du personnage
         g.fillRect(hero.getPosition().getX(), hero.getPosition().getY(), cellSize, cellSize) ;
         //--------------
-    }
+    } 
 }
