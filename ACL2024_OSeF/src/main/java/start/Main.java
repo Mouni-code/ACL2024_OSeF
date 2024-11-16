@@ -1,28 +1,28 @@
 package start;
 
-import model.*;
-import java.util.Scanner;
-import engine.GameEngineGraphical;
+import java.awt.Dimension;
 
-import java.util.List ;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+
+import model.LabyDess;
+import model.Labyrinthe ;
 
 public class Main {
 
 
-	//Test du jeu v.0-------------------------------------------------------------------------------------------
-	/*public static void main(String[] args) throws InterruptedException {
+	//Test du jeu v.0
 
-		// creation du jeu particulier et de son afficheur
-		PacmanGame game = new PacmanGame("helpFilePacman.txt");
-		PacmanPainter painter = new PacmanPainter();
-		PacmanController controller = new PacmanController();
+   /*  public static void main(String[] args) {
+        Hero hero = new Hero(0, 0);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Départ du héros en " + hero.getPosition()) ;
 
-		// classe qui lance le moteur de jeu generique
-		GameEngineGraphical engine = new GameEngineGraphical(game, painter, controller);
-		engine.run();
-	}*/
+        while (true) {      //tu mets les directions une par une 
+            System.out.println("Dans quel sens le héros doit se déplacer ? (UP, DOWN, LEFT, RIGHT) : ");
+            String direction = scanner.nextLine();
+            hero.move(direction);
+            System.out.println("Position actuelle du héros : " + hero.getPosition());
+        }*/
 
 
     //Test l'aff des laby.--------------------------------------------------------------------------------------
