@@ -1,19 +1,12 @@
 package start;
 
-import java.awt.Dimension;
+import javax.swing.JFrame;
 
-import javax.swing.* ;
-
-import model.LabyDess;
-import model.Labyrinthe ;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import model.Scene ;
 
 public class Main {
 
+    public static Scene scene;
 	//Test du jeu v.0
 
    /*  public static void main(String[] args) {
@@ -40,18 +33,24 @@ public class Main {
     //Test Aff Graphique----------------------------------------------------------------------------------------
     public static void main(String[] args) {
 
-        // Créez le panneau du labyrinthe
-        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF\\ACL2024_OSeF\\src\\main\\java\\model\\Laby")) ;
+        // Créez le panneau du labyrinthe v1.0
+        /*LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF\\ACL2024_OSeF\\src\\main\\java\\model\\Laby")) ;
         labyDess.setNiveau(0);
-        labyDess.setPreferredSize(new Dimension(1920, 1080)); // Taille panneau 1920x1080 pixels
+        labyDess.setPreferredSize(new Dimension(1920, 1080)); // Taille panneau 1920x1080 pixels*/
         
-        JFrame frame = new JFrame("nom du jeu") ;
+        JFrame frame = new JFrame("Osef Game") ;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
 
-        frame.add(labyDess) ;
+        //frame.add(labyDess) ;
         frame.pack() ; // Ajuste la taille de la fenêtre au contenu
-        frame.setResizable(true) ; // Permet le redimensionnement de la fenêtre
-        frame.setVisible(true) ;
+        frame.setSize(1000,700);
+        frame.setResizable(false) ; // Permet le redimensionnement de la fenêtre
+        frame.setLocationRelativeTo(null);
+        frame.setAlwaysOnTop(true);
+        //v2.0
+        scene = new Scene();
+        frame.setContentPane(scene);
+        frame.setVisible(true);
     }
 
     /*public static void main(String[] args) {

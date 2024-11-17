@@ -1,10 +1,14 @@
 package model ;
 
-import java.util.List ;
-import engine.GlobalKeyListener ;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Dimension ;
+import java.awt.event.ActionEvent ;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+import engine.GlobalKeyListener;
 
 public class MovingCharacterExample {
 
@@ -13,7 +17,7 @@ public class MovingCharacterExample {
     public static void main(String[] args) {
         
         // Créez le panneau du labyrinthe
-        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF\\ACL2024_OSeF\\src\\main\\java\\model\\Laby")) ;
+        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby")) ;
         labyDess.setNiveau(2);
         int vitesse = labyDess.hero.getVit() ;
         labyDess.setPreferredSize(new Dimension(50*cellSize, 15*cellSize));
