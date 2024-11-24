@@ -9,3 +9,16 @@
     - Les releases n'ont toujours pas été fait à cause d'un soucis en relation avec le pom.xml
 
 •    Amélioration du personnage Hero (GAB)
+    - Création d'une version 1.0
+
+•    Création de la classe Monster :
+        -Implémentation d'une classe représentant un monstre dans un jeu, héritant de la classe Character
+        -Ajout des fonctionnalités principales :
+            -Attribut isIntelligent pour différencier les comportements.
+            -Constructeur initialisant les propriétés du monstre (coordonnées, vie, dégâts, vitesse, intelligence).
+
+        Méthodes principales :
+            move :
+                -Déplacement aléatoire si le monstre n’est pas intelligent.
+                -Déplacement basé sur une direction spécifique si le monstre est intelligent.
+                -Poursuite du héros avec "poursuivreHero"
