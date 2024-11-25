@@ -1,26 +1,26 @@
 package start;
 
-import java.util.Scanner;
+import javax.swing.JFrame;
 
-import model.Hero;
 import model.Scene;
+
 
 public class Main {
 
     public static Scene scene;
 	//Test du jeu v.0
 
-    public static void main(String[] args) {
-        Hero hero = new Hero(0, 0, 0);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Départ du héros en " + hero.getPosition()) ;
-        while (true) {      //tu mets les directions une par une 
-            System.out.println("Dans quel sens le héros doit se déplacer ? (UP, DOWN, LEFT, RIGHT) : ");
-            String direction = scanner.nextLine();
-            hero.move(direction);
-            System.out.println("Position actuelle du héros : " + hero.getPosition());
-        }
-    } 
+    // public static void main(String[] args) {
+    //     Hero hero = new Hero(0, 0, 0);
+    //     Scanner scanner = new Scanner(System.in);
+    //     System.out.println("Départ du héros en " + hero.getPosition()) ;
+    //     while (true) {      //tu mets les directions une par une 
+    //         System.out.println("Dans quel sens le héros doit se déplacer ? (UP, DOWN, LEFT, RIGHT) : ");
+    //         String direction = scanner.nextLine();
+    //         hero.move(direction);
+    //         System.out.println("Position actuelle du héros : " + hero.getPosition());
+    //     }
+    
 
     //Test l'aff des laby.--------------------------------------------------------------------------------------
     /*public static void main(String[] args) {
@@ -31,27 +31,27 @@ public class Main {
 
     
     //Test Aff Graphique----------------------------------------------------------------------------------------
-    //public static void main(String[] args) {
+    public static void main(String[] args) {
 
         // Créez le panneau du labyrinthe v1.0
         /*LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF\\ACL2024_OSeF\\src\\main\\java\\model\\Laby")) ;
         labyDess.setNiveau(0);
         labyDess.setPreferredSize(new Dimension(1920, 1080)); // Taille panneau 1920x1080 pixels*/
         
-    //     JFrame frame = new JFrame("Osef Game") ;
-    //     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
+         JFrame frame = new JFrame("Osef Game") ;
+         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
 
-    //     //frame.add(labyDess) ;
-    //     frame.pack() ; // Ajuste la taille de la fenêtre au contenu
-    //     frame.setSize(1000,700);
-    //     frame.setResizable(false) ; // Permet le redimensionnement de la fenêtre
-    //     frame.setLocationRelativeTo(null);
-    //     frame.setAlwaysOnTop(true);
+         //frame.add(labyDess) ;
+         frame.pack() ; // Ajuste la taille de la fenêtre au contenu
+         frame.setSize(1000,700);
+         frame.setResizable(false) ; // Permet le redimensionnement de la fenêtre
+         frame.setLocationRelativeTo(null);
+         frame.setAlwaysOnTop(true);
     //     //v2.0
-    //     scene = new Scene();
-    //     frame.setContentPane(scene);
-    //     frame.setVisible(true);
-    // }
+         scene = new Scene();
+         frame.setContentPane(scene);
+         frame.setVisible(true);
+     }
 
     /*public static void main(String[] args) {
         int x = 100 ; int y = 100 ; int CHARACTER_SIZE = 25 ;
