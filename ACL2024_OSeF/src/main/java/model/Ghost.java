@@ -1,5 +1,5 @@
 package model;
-
+//A VOIR SI ON LAJOUTE
 public class Ghost extends Character {
 
     public Ghost(int startX, int startY) {
