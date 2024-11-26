@@ -1,39 +1,37 @@
-package model ;
+package model;
 
 import java.util.LinkedList ;
 import engine.GlobalKeyListener ;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList ;
 
-public class MovingCharacterExample {
-    //Mettre ça en forme de vrai classe
-    //faire une methode proxi ? ( si à cote d'un truc, ... )
+//import engine.GlobalKeyListener;
 
-    private static final int cellSize = 20 ; // Taille du personnage
+public class MovingCharacter {
+    private LabyDess labyDess ;
+    private int vitesse ;
+    private int cellSize = 20 ;
+    private GlobalKeyListener keyListener ;
+    private LinkedList<Integer> Direction ;
 
-    public static void main(String[] args) {
-        
-        // Créez le panneau du labyrinthe
-        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF\\ACL2024_OSeF\\src\\main\\java\\model\\Laby")) ;
-        labyDess.setNiveau(0) ;
-        int vitesse = labyDess.hero.getVit() ;
+    public MovingCharacter(){
+        labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF\\ACL2024_OSeF\\src\\main\\java\\model\\Laby")) ;
+        vitesse = labyDess.hero.getVit() ;
         labyDess.setPreferredSize(new Dimension(64*cellSize, 33*cellSize)) ; //j'ai testé ce qui remplissé mon ecran en entier. Peut etre pas compatible sur tous les pc 
-        
+        keyListener = new GlobalKeyListener() ;
+        Direction = keyListener.direction ;
 
         JFrame frame = new JFrame("nomJeu") ;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(50*cellSize, 15*cellSize);
         frame.add(labyDess);
 
-        GlobalKeyListener keyListener = new GlobalKeyListener();
-        LinkedList<Integer> Direction = keyListener.direction ;
-        //List<Integer> Direction = keyListener.direction ;
         frame.addKeyListener(keyListener);
         frame.setFocusable(true);
         frame.requestFocus();
 
-        // Créez un Timer pour animer le personnage
         Timer timer = new Timer(16, new ActionListener() { // Environ 60 FPS
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,5 +84,13 @@ public class MovingCharacterExample {
         
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public void proxi(int X, int Y){
+        int caseX = X/cellSize ; int caseY = Y/cellSize ;
+        ArrayList<Character> listeCasePiege = new ArrayList<Character>() ; listeCasePiege.add('T') ;
+        if( listeCasePiege.contains(labyDess.getMaze()[caseY][caseX + 1]) ){
+
+        }
     }
 }

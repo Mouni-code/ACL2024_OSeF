@@ -1,6 +1,6 @@
 package model;
 
-public class Hero extends Character {
+public class Hero extends Charactere {
     private int vitesse ;
 
     public Hero(int startX, int startY, int v) {

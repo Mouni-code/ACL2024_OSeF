@@ -1,6 +1,6 @@
 package model;
 
-public class Ghost extends Character {
+public class Ghost extends Charactere {
 
     public Ghost(int startX, int startY) {
         super(startX, startY);

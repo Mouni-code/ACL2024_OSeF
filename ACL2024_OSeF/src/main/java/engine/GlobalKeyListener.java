@@ -1,20 +1,23 @@
 package engine ;
 
-import java.util.ArrayList;
-import java.util.List ;
+import java.util.LinkedList;
+//import java.awt.desktop.SystemSleepEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 public class GlobalKeyListener implements KeyListener {
-    public List<Integer> direction ;
-    private int n ;
-
+    public LinkedList<Integer> direction ;
+    int jeton ;
+    public boolean press ;
+    
     public GlobalKeyListener() {
-        direction = new ArrayList<Integer>() ;
+        press = false ;
+        direction = new LinkedList<Integer>() ;
         direction.add(-1) ;
-        n = direction.size() ;
-        // Créer une fenêtre invisible pour capturer les événements clavier
+        jeton = 0 ;
+
+        // Créer une fenêtre invisible pour capturer les événements clavier pour les tests claviers seulemnts
         JFrame frame = new JFrame();
         frame.setSize(0, 0);
         frame.setUndecorated(true);
@@ -24,27 +27,37 @@ public class GlobalKeyListener implements KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        if( direction.get(n -1) != e.getKeyCode() ){
+    public void keyPressed(KeyEvent e) {//prendre ds jetons // Essayer de l'enlever juste avant qu'il le remette
+        if( direction.getLast() != e.getKeyCode() ){
+            jeton += 1 ;
             direction.add(e.getKeyCode()) ;
         }
-        System.out.println(direction.get(direction.size() -1)) ; //"Touche pressée : " + e.getKeyCode());
-        //direction.remove(direction.size() -1) ;
+        System.out.println("Pr_jet." + jeton + direction ) ; //"Touche pressée : " + e.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        direction.removeIf(x -> x != -1 ) ;
-        System.out.println(direction.get(direction.size() -1)) ; //"Touche relâchée : " + KeyEvent.getKeyText(e.getKeyCode()));
+        jeton -= 1 ;//ici
+        if( jeton < 0 ){
+            jeton = 0 ;
+        }
+        direction.removeIf(x -> x != -1 && x == direction.getLast() ) ;//ici
+        /*if( n == 0 ){
+            direction.add(-1) ;
+        }*/
+        //direction.removeIf(x -> x != -1 ) ;//OK
+        System.out.println("Rl_jet." + jeton + direction) ; //"Touche relâchée : " + KeyEvent.getKeyText(e.getKeyCode()));
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        //direction.add(e.getKeyCode()) ;
-        // Cette méthode n'est généralement pas utilisée pour l'écoute globale
+        direction.add(e.getKeyCode()) ;
+        jeton += 1 ;
+        direction.removeLast() ;
+        jeton -= 1 ;
     }
 
-    public static void main(String[] args) {
-        List<Integer> a = (new GlobalKeyListener()).direction ;
+    public static void main(String[] arg){
+        new GlobalKeyListener() ;
     }
 }  
