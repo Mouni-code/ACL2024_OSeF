@@ -5,7 +5,7 @@ Finaliser le jeu en intégrant les dernières fonctionnalités nécessaires à u
 
 ---
 
-## I. Gestion des cases spéciales (Gabriel)
+## I. Gestion des cases spéciales (Gabriel) ~1sem
 Les cases spéciales introduisent des mécaniques uniques dans le jeu pour enrichir l'expérience des joueurs.
 
 ### Types de cases :
@@ -46,7 +46,7 @@ Les cases spéciales introduisent des mécaniques uniques dans le jeu pour enric
 
 ---
 
-## II. Gestion des monstres ( Fatima & Sabrine)
+## II. Gestion des monstres ( Fatima & Sabrine) ~1sem
 Adapter la mécanique des monstres pour qu'ils interagissent avec le héros et les éléments du jeu.
 
 ### Tâches :
