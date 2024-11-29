@@ -1,21 +1,20 @@
 package engine;
 import start.Main;
+
 public class Chrono implements Runnable {
 
-    private final int pause = 3;//temps d'attente entre 2 tours de boucles
+    private final int pause = 3;
+
 
     @Override
     public void run() {
-       
-        while (true) { 
-            
+        while (true) {
             Main.scene.repaint();
-            
             try {
-                Thread.sleep(pause);//flux
-            } catch (InterruptedException e) {} 
+                Thread.sleep(pause);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
-    
-

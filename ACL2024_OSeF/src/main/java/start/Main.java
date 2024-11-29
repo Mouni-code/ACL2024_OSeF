@@ -1,9 +1,13 @@
 package start;
 
 import javax.swing.JFrame;
+
+import engine.Chrono;
 import model.Scene;
 
 public class Main {
+
+    public static Scene scene;
 
     public static void main(String[] args) {
         // Créer la fenêtre principale
@@ -16,10 +20,13 @@ public class Main {
         frame.setLocationRelativeTo(null); // Centrer la fenêtre sur l'écran
 
         // Créer une instance de la scène et l'ajouter à la fenêtre
-        Scene scene = new Scene(); // La scène gère l'affichage et l'interactivité
+        scene = new Scene(); // La scène gère l'affichage et l'interactivité
         frame.setContentPane(scene); // Ajouter la scène comme contenu principal
 
         // Afficher la fenêtre
         frame.setVisible(true);
+        Thread chronoThread = new Thread(new Chrono());
+        chronoThread.start();
     }
+
 }
