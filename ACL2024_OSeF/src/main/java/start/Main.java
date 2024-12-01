@@ -10,6 +10,9 @@ public class Main {
     public static Scene scene;
 
     public static void main(String[] args) {
+
+
+        
         // Créer la fenêtre principale
         JFrame frame = new JFrame("Osef Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme l'application quand la fenêtre est fermée

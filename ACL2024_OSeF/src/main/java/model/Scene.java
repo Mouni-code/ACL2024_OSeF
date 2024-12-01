@@ -74,6 +74,8 @@ public class Scene extends JPanel implements KeyListener {
         // Dessiner le fond
         g2.drawImage(this.imagefond, 0, 0, null);
 
+        drawLaby(g2);
+
         // Dessiner le héros uniquement s'il a encore des vies
         if (heroLives > 0) {
             if (isCollision && System.currentTimeMillis() % 200 < 100) {
@@ -117,6 +119,13 @@ public class Scene extends JPanel implements KeyListener {
         for (int i = 0; i < heroLives; i++) {
             g2.fillOval(lifeX + (i * (lifeSize + 5)), lifeY, lifeSize, lifeSize); // Dessine un cercle par vie
         }
+    }
+    private void drawLaby(Graphics2D g2){
+        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby")) ;
+        labyDess.setNiveau(2);
+        //int vitesse = labyDess.hero.getVit() ;
+        //labyDess.setPreferredSize(new Dimension(1000, 700));
+        labyDess.paintComponent(g2);
     }
 
     private void suivreHero() {
