@@ -22,6 +22,9 @@ public class Scene extends JPanel implements KeyListener {
     private ImageIcon icomonstre;
     private Image imagemonstre;
 
+    private ImageIcon icoYouDied;
+    private Image imageYouDied;
+
     private int heroX = 100; // Position initiale du héros
     private int heroY = 70;
     private int heroWidth = 50; // Largeur approximative du héros
@@ -29,6 +32,8 @@ public class Scene extends JPanel implements KeyListener {
 
     private int monsterX = 300; // Position initiale du monstre
     private int monsterY = 200;
+    private int monsterHealth = 100; // Santé du monstre
+    private int monsterMaxHealth = 100;
 
     // Santé et vies du héros
     private int heroHealth = 100; // Santé actuelle
@@ -50,6 +55,10 @@ public class Scene extends JPanel implements KeyListener {
         this.imagehero = this.icohero.getImage();
         icomonstre = new ImageIcon(getClass().getResource("/images/monster.png"));
         this.imagemonstre = this.icomonstre.getImage();
+
+        // Charger l'image "You Died"
+        icoYouDied = new ImageIcon(getClass().getResource("/images/youdied.png"));
+        this.imageYouDied = this.icoYouDied.getImage();
 
         // Configuration du panneau
         this.setFocusable(true);
@@ -74,24 +83,38 @@ public class Scene extends JPanel implements KeyListener {
         // Dessiner le fond
         g2.drawImage(this.imagefond, 0, 0, null);
 
+        // Dessiner le labyrinthe
         drawLaby(g2);
 
-        // Dessiner le héros uniquement s'il a encore des vies
-        if (heroLives > 0) {
-            if (isCollision && System.currentTimeMillis() % 200 < 100) {
-                // Effet de glitch : on n'affiche pas l'image du héros par intermittence
-            } else {
-                g2.drawImage(this.imagehero, heroX, heroY, null);
-            }
+        // Si le héros est mort, afficher "You Died"
+        if (heroLives <= 0) {
+            int imageWidth = imageYouDied.getWidth(null);
+            int imageHeight = imageYouDied.getHeight(null);
+
+            int centerX = (this.getWidth() - imageWidth) / 2; 
+            int centerY = (this.getHeight() - imageHeight) / 2; 
+
+            g2.drawImage(this.imageYouDied, centerX, centerY, null); 
+            return;
         }
 
-        // Dessiner le monstre
-        g2.drawImage(this.imagemonstre, monsterX, monsterY, null);
+       
+        if (heroLives > 0) {
+            g2.drawImage(this.imagehero, heroX, heroY, null);
+        }
 
-        // Dessiner la barre de santé
+        
+        if (monsterHealth > 0) {
+            g2.drawImage(this.imagemonstre, monsterX, monsterY, null);
+
+            
+            drawMonsterHealthBar(g2);
+        }
+
+        
         drawHealthBar(g2);
 
-        // Dessiner les vies du héros
+        
         drawLives(g2);
     }
 
@@ -99,45 +122,66 @@ public class Scene extends JPanel implements KeyListener {
         int barX = 10, barY = 10, barWidth = 200, barHeight = 20;
         int filledWidth = (int) ((double) heroHealth / heroMaxHealth * barWidth);
 
-        // Dessiner la barre vide
+       
         g2.setColor(Color.GRAY);
         g2.fillRect(barX, barY, barWidth, barHeight);
 
-        // Dessiner la barre remplie
+        
         g2.setColor(Color.RED);
         g2.fillRect(barX, barY, filledWidth, barHeight);
 
-        // Dessiner la bordure
+       
+        g2.setColor(Color.BLACK);
+        g2.drawRect(barX, barY, barWidth, barHeight);
+    }
+
+    private void drawMonsterHealthBar(Graphics2D g2) {
+        int barX = monsterX, barY = monsterY - 20, barWidth = 100, barHeight = 10;
+        int filledWidth = (int) ((double) monsterHealth / monsterMaxHealth * barWidth);
+
+      
+        g2.setColor(Color.GRAY);
+        g2.fillRect(barX, barY, barWidth, barHeight);
+
+        
+        g2.setColor(Color.RED);
+        g2.fillRect(barX, barY, filledWidth, barHeight);
+
+        
         g2.setColor(Color.BLACK);
         g2.drawRect(barX, barY, barWidth, barHeight);
     }
 
     private void drawLives(Graphics2D g2) {
-        int lifeX = 10, lifeY = 40, lifeSize = 20; // Position de départ et taille des vies
+        int lifeX = 10, lifeY = 40, lifeSize = 20; 
 
         g2.setColor(Color.RED);
         for (int i = 0; i < heroLives; i++) {
-            g2.fillOval(lifeX + (i * (lifeSize + 5)), lifeY, lifeSize, lifeSize); // Dessine un cercle par vie
+            g2.fillOval(lifeX + (i * (lifeSize + 5)), lifeY, lifeSize, lifeSize); 
         }
     }
-    private void drawLaby(Graphics2D g2){
-        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby")) ;
+
+    private void drawLaby(Graphics2D g2) {
+        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
         labyDess.setNiveau(2);
-        //int vitesse = labyDess.hero.getVit() ;
-        //labyDess.setPreferredSize(new Dimension(1000, 700));
-        labyDess.paintComponent(g2);
+        labyDess.paintComponent(g2); 
     }
 
     private void suivreHero() {
+       
+        if (monsterHealth <= 0) {
+            return;
+        }
+
         if (Math.abs(monsterX - heroX) < 20 && Math.abs(monsterY - heroY) < 20) {
-            // Collision détectée
+            
             if (!isCollision) {
                 startCollision();
             }
             return;
         }
 
-        // Déplacement normal du monstre
+        
         if (monsterX < heroX) {
             monsterX += 5;
         } else if (monsterX > heroX) {
@@ -152,32 +196,44 @@ public class Scene extends JPanel implements KeyListener {
     }
 
     private void startCollision() {
+        
+        if (monsterHealth <= 0) {
+            return;
+        }
+
         isCollision = true;
 
-        // Réduire la santé du héros
+       
         heroHealth = Math.max(0, heroHealth - 10);
 
-        // Vérifier si le héros a perdu toute sa santé
+      
         if (heroHealth == 0) {
-            heroLives--; // Perdre une vie
+            heroLives--; 
             if (heroLives > 0) {
-                heroHealth = heroMaxHealth; // Réinitialiser la santé si des vies restent
+                heroHealth = heroMaxHealth; 
             }
         }
 
-        // Arrêter temporairement le monstre
+       
         collisionTimer = new Timer(collisionDuration, e -> {
-            isCollision = false; // Fin de la collision
+            isCollision = false;
             collisionTimer.stop();
         });
         collisionTimer.setRepeats(false);
         collisionTimer.start();
     }
 
+    private void heroAttack() {
+        
+        if (Math.abs(monsterX - heroX) < 50 && Math.abs(monsterY - heroY) < 50) {
+            monsterHealth = Math.max(0, monsterHealth - 20); 
+        }
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         if (heroLives <= 0) {
-            return; // Le héros ne peut pas bouger s'il n'a plus de vies
+            return; 
         }
 
         int mapWidth = this.getWidth();
@@ -203,6 +259,9 @@ public class Scene extends JPanel implements KeyListener {
                 if (heroX + heroWidth < mapWidth) {
                     heroX += 10;
                 }
+                break;
+            case KeyEvent.VK_SPACE: // Attaque
+                heroAttack();
                 break;
         }
         repaint();
