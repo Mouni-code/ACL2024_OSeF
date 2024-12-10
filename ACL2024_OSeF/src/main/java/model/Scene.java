@@ -53,7 +53,7 @@ public class Scene extends JPanel implements KeyListener {
         // Charger les images
         icofond = new ImageIcon(getClass().getResource("/images/fondecran.png"));
         this.imagefond = this.icofond.getImage();
-        icohero = new ImageIcon(getClass().getResource("/images/prince.png"));
+        icohero = new ImageIcon(getClass().getResource("/images/heroagain.png"));
         this.imagehero = this.icohero.getImage();
         icomonstre = new ImageIcon(getClass().getResource("/images/monster.png"));
         this.imagemonstre = this.icomonstre.getImage();
@@ -162,9 +162,10 @@ public class Scene extends JPanel implements KeyListener {
             g2.fillOval(lifeX + (i * (lifeSize + 5)), lifeY, lifeSize, lifeSize); 
         }
     }
+    LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
+    
 
     private void drawLaby(Graphics2D g2) {
-        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
         labyDess.setNiveau(2);
         labyDess.paintComponent(g2); 
     }
@@ -226,8 +227,7 @@ public class Scene extends JPanel implements KeyListener {
 
     public void moveHero(String direction) {
         // Chargement du labyrinthe
-        LabyDess labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
-        labyDess.setNiveau(2);
+        int lvl = labyDess.getNiveau();
         char[][] maze = labyDess.getMaze();
     
         if (heroLives <= 0) {
@@ -256,6 +256,7 @@ public class Scene extends JPanel implements KeyListener {
                             collision = true;
                             break;
                         }
+                        
                     }
                     if (!collision) heroY -= moveStep; // Déplacement effectif
                 }

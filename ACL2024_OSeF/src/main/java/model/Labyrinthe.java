@@ -5,12 +5,12 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path ;
 import java.nio.file.Paths ;
-import java.util.List;
-import java.util.ArrayList ;
+import java.util.ArrayList;
+import java.util.List ;
 
 public class Labyrinthe {
     private int niveau;
-    public List<List<String>> TousLesLaby = new ArrayList<>() ; //contenu de tous les labyrinthes selon les niveaux
+    public static List<List<String>> TousLesLaby = new ArrayList<>() ; //contenu de tous les labyrinthes selon les niveaux
     Path dossier ;
 
     public Labyrinthe(String cheminDossier) {
