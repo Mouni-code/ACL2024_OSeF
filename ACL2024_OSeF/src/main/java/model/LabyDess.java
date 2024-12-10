@@ -75,20 +75,20 @@ public class LabyDess extends JPanel {
             for (List<String> niveau : labyrinthe.TousLesLaby) {
                 System.err.println("- " + niveau.get(0).trim());
             }
+            this.maze = null; // Mettre maze à null si le niveau n'est pas trouvé
         }
     }
     
-    public char[][] getMaze(){
-        return maze ;
+    public char[][] getMaze() {
+        return maze;
     }
-
+    
+    public void setNiveau(int nivo) {
+        this.niv = nivo;
+        remplirMaze();
+    }
     public int getNiveau(){
         return niv ;
-    }
-
-    public void setNiveau(int nivo){
-        this.niv = nivo ;
-        remplirMaze() ;
     }
 @Override
 protected void paintComponent(Graphics g) {
