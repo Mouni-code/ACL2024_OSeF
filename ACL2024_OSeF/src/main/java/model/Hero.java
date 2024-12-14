@@ -3,13 +3,12 @@ package model;
 public class Hero extends Character {
     private int vitesse ;
 
-    public Hero(int startX, int startY, int v) {
-        super(startX, startY);
+    public Hero(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int v) {
+        super( startX,  startY,  characterWIDTH,  characterHEIGHT,  lives,  health,  damage);
         vitesse = v ;
     }
 
-    @Override
-    public void move(String direction) {
+    public void moveHero(String direction) {
         switch (direction.trim().toUpperCase()) {
             case "UP":
                 position.setY(position.getY() + 1);

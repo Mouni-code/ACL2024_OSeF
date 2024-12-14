@@ -1,5 +1,5 @@
 package model;
-
+//SOUCIS : YOU DIED Dès le début!
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,6 +14,23 @@ import javax.swing.Timer;
 
 public class Scene extends JPanel implements KeyListener {
 
+    Hero hero = new Hero(100, 70, 50 , 50, 3, 100, 20, 1);
+    Monster monster = new Monster(350, 200, 50, 50, 1, 100, 20, 1, false);
+    Monster monster2 = new Monster(500, 300, 50, 50, 1, 100, 20, 1, true);
+    Ghost ghost1 = new Ghost(400, 400, 50, 50, 1, 100, 20, 1);
+    Ghost ghost2 = new Ghost(600, 100,50, 50, 1, 100, 20, 1);
+    Ghost ghost3 = new Ghost(200, 500, 50, 50, 1, 100, 20, 1);
+
+    int heroX = hero.getPosition().get(0);
+    int heroY =  hero.getPosition().get(1);
+    int heroWidth = hero.characterWIDTH;
+    int heroHeight = hero.characterHEIGHT;
+    int monsterX = monster.getPosition().get(0);
+    int monsterY = monster.getPosition().get(1);
+    int monsterHealth = monster.health;
+    int ghost2X = ghost2.getPosition().get(0);
+    int ghost2Y = ghost2.getPosition().get(1);
+    int ghost2Health = ghost2.health;
     private ImageIcon icofond;
     private Image imagefond;
 
@@ -28,45 +45,37 @@ public class Scene extends JPanel implements KeyListener {
 
     private ImageIcon icoYouDied;
     private Image imageYouDied;
-
-    private int heroX = 100;
-    private int heroY = 70;
-    private int heroWidth = 50;
-    private int heroHeight = 50;
-
-    private int monsterX = 300;
-    private int monsterY = 200;
-    private int monsterHealth = 100;
+     
+    int ghost1X = ghost1.getPosition().get(0);
+    int ghost1Y = ghost1.getPosition().get(1);
+    int ghost1Health = ghost1.health;
+    int ghost3X = ghost3.getPosition().get(0);
+    int ghost3Y = ghost3.getPosition().get(1);
+    int ghost3Health = ghost3.health;
+    int heroHealth = hero.health;
+    int heroMaxHealth = 100;
+    int heroLives = hero.lives;
     private int monsterMaxHealth = 100;
-
-    private int monster2X = 500;
-    private int monster2Y = 300;
-    private int monster2Health = 100;
+    private int monster2X;
+    private int monster2Y;
+    private int monster2Health;
     private int monster2MaxHealth = 100;
-
-    private int ghost1X = 400, ghost1Y = 400;
-    private int ghost1Health = 100, ghost1MaxHealth = 100;
+    private int ghost1MaxHealth = 100;
     private int[][] ghost1Targets = new int[5][2];
     private int ghost1TargetIndex = 0;
-
-    private int ghost2X = 600, ghost2Y = 100;
-    private int ghost2Health = 100, ghost2MaxHealth = 100;
+    private int ghost2MaxHealth = 100;
     private int[][] ghost2Targets = new int[5][2];
     private int ghost2TargetIndex = 0;
-
-    private int ghost3X = 200, ghost3Y = 500;
-    private int ghost3Health = 100, ghost3MaxHealth = 100;
+    private int ghost3MaxHealth = 100;
     private int[][] ghost3Targets = new int[5][2];
     private int ghost3TargetIndex = 0;
-
-    private int heroHealth = 100;
-    private int heroMaxHealth = 100;
-    private int heroLives = 3;
 
     private static final int MAX_DISTANCE = 300;
     private static final int MAP_WIDTH = 800;
     private static final int MAP_HEIGHT = 600;
     private static final int GHOST_STEP = 5;
+
+    Position heroPosition = new Position(heroX, heroY);
 
     private boolean isCollision = false;
     private Timer collisionTimer;
@@ -74,7 +83,8 @@ public class Scene extends JPanel implements KeyListener {
 
     private Random random = new Random();
 
-    private LabyDess labyDess;
+    private LabyDess labyDess= new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
+    public  char[][] map = labyDess.maze;
 
     public Scene() {
         super();
@@ -99,7 +109,7 @@ public class Scene extends JPanel implements KeyListener {
         this.requestFocusInWindow();
         this.addKeyListener(this);
 
-        labyDess = new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
+        //public Character(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage)
 
         generateRandomPoints(ghost1Targets);
         generateRandomPoints(ghost2Targets);
@@ -123,6 +133,18 @@ public class Scene extends JPanel implements KeyListener {
             repaint();
         });
         moveTimer.start();
+    
+    }
+
+    public void init(){
+        System.out.println("Initialisation :");
+        System.out.println("Héros : (" + heroX + ", " + heroY + ")");
+        System.out.println("Monstre : (" + monsterX + ", " + monsterY + ")");
+        System.out.println("Ghost1 : (" + ghost1X + ", " + ghost1Y + ")");
+        System.out.println("Ghost2 : (" + ghost2X + ", " + ghost2Y + ")");
+        System.out.println("Ghost3 : (" + ghost3X + ", " + ghost3Y + ")");
+        System.out.println("nombre de vie:"+ heroLives);
+
     }
 
     @Override
@@ -250,6 +272,8 @@ public class Scene extends JPanel implements KeyListener {
         heroY = Math.max(0, Math.min(newHeroY, MAP_HEIGHT - heroHeight));
     }
     
+   // Méthode pour déplacer le monstre toutes les secondes (ou un autre intervalle)
+    // Method for moving the monsters
 
     private void startCollision() {
         isCollision = true;
@@ -304,6 +328,8 @@ public class Scene extends JPanel implements KeyListener {
         }
     }
 
+    
+
     private void suivreHero(int currentMonsterX, int currentMonsterY, boolean isSecondMonster) {
         int distanceX = Math.abs(currentMonsterX - heroX);
         int distanceY = Math.abs(currentMonsterY - heroY);
@@ -327,25 +353,103 @@ public class Scene extends JPanel implements KeyListener {
         }
     }
 
-    private boolean isWalkable(int x, int y) {
-        int cellSize = 40;
 
-        int cellX1 = x / cellSize;
-        int cellY1 = y / cellSize;
-        int cellX2 = (x + heroWidth - 1) / cellSize;
-        int cellY2 = (y + heroHeight - 1) / cellSize;
+    
 
-        if (cellY1 < 0 || cellY2 >= labyDess.getMaze().length ||
-            cellX1 < 0 || cellX2 >= labyDess.getMaze()[0].length) {
-            return false;
-        }
-
+    public void moveHero(String direction) {
+        // Chargement du labyrinthe
+        int lvl = labyDess.getNiveau();
         char[][] maze = labyDess.getMaze();
-        return maze[cellY1][cellX1] != '#' &&
-               maze[cellY1][cellX2] != '#' &&
-               maze[cellY2][cellX1] != '#' &&
-               maze[cellY2][cellX2] != '#';
+    
+        if (heroLives <= 0) {
+            return; // Le héros ne peut plus bouger s'il n'a plus de vies
+        }
+    
+        // Dimensions de la carte et du héros
+        final int mapWidth = this.getWidth();
+        final int mapHeight = this.getHeight();
+        final int cellSize = 40;
+        final int moveStep = 10; // Pas de déplacement
+        boolean collision = false;
+    
+        // Sauvegarde de la position initiale du héros
+        int posX = heroX;
+        int posY = heroY;
+    
+        // Calcul des nouvelles coordonnées selon la direction
+        switch (direction.toUpperCase()) {
+            case "UP":
+                if (heroY > 0) { // Limites hautes
+                    for (int x = heroX; x < heroX + heroWidth; x += cellSize) {
+                        int caseXToCheck = x / cellSize;
+                        int caseYToCheck = (heroY + 4 * moveStep) / cellSize; // Position future (haut)
+                        if (maze[caseYToCheck][caseXToCheck] == '#') {
+                            collision = true;
+                            break;
+                        }
+                    }
+                    if (!collision) heroY -= moveStep; // Déplacement effectif
+                }
+                break;
+    
+            case "DOWN":
+                if (heroY + heroHeight < mapHeight) { // Limites basses
+                    for (int x = heroX; x < heroX + heroWidth; x += cellSize) {
+                        int caseXToCheck = x / cellSize;
+                        int caseYToCheck = (heroY + 4 * moveStep + heroHeight) / cellSize; // Position future (bas)
+                        if (maze[caseYToCheck][caseXToCheck] == '#') {
+                            collision = true;
+                            break;
+                        }
+                    }
+                    if (!collision) heroY += moveStep; // Déplacement effectif
+                }
+                break;
+    
+            case "LEFT":
+                if (heroX > 0) { // Limites gauche
+                    for (int y = heroY; y < heroY + heroHeight; y += cellSize) {
+                        int caseXToCheck = (heroX - moveStep) / cellSize;
+                        int caseYToCheck = y / cellSize;
+                        if (maze[caseYToCheck][caseXToCheck] == '#') {
+                            collision = true;
+                            break;
+                        }
+                    }
+                    if (!collision) heroX -= moveStep; // Déplacement effectif
+                }
+                break;
+    
+            case "RIGHT":
+                if (heroX + heroWidth < mapWidth) { // Limites droite
+                    for (int y = heroY; y < heroY + heroHeight; y += cellSize) {
+                        int caseXToCheck = (heroX + moveStep + heroWidth - 1) / cellSize;
+                        int caseYToCheck = y / cellSize;
+                        if (maze[caseYToCheck][caseXToCheck] == '#') {
+                            collision = true;
+                            break;
+                        }
+                    }
+                    if (!collision) heroX += moveStep; // Déplacement effectif
+                }
+                break;
+    
+            default:
+                System.out.println("Direction non valide !");
+                break;
+        }
+    
+        // Gestion de la collision
+        if (collision) {
+            heroX = posX; // Annuler le déplacement (X)
+            heroY = posY; // Annuler le déplacement (Y)
+            System.out.println("Collision détectée !");
+        }
+    
+        // Affichage de la position actuelle
+        System.out.println("Position actuelle du héros : (" + heroX + ", " + heroY + ")");
     }
+    
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -391,46 +495,6 @@ public class Scene extends JPanel implements KeyListener {
         if (Math.abs(ghost3X - heroX) < 50 && Math.abs(ghost3Y - heroY) < 50 && ghost3Health > 0) {
             ghost3Health = Math.max(0, ghost3Health - 20);
         }
-    }
-
-
-    public void moveHero(String direction) {
-        if (heroLives <= 0) return;
-
-        int newX = heroX, newY = heroY;
-        int moveStep = 10;
-        boolean collision = false;
-
-        switch (direction.toUpperCase()) {
-            case "UP":
-                newY -= moveStep;
-                break;
-            case "DOWN":
-                newY += moveStep;
-                break;
-            case "LEFT":
-                newX -= moveStep;
-                break;
-            case "RIGHT":
-                newX += moveStep;
-                break;
-            default:
-                System.out.println("Direction non valide !");
-                break;
-        }
-
-        if (!isWalkable(newX, newY)) {
-            collision = true;
-        } else {
-            heroX = newX;
-            heroY = newY;
-        }
-
-        if (collision) {
-            System.out.println("Collision détectée !");
-        }
-
-        System.out.println("Position actuelle : (" + heroX + ", " + heroY + ")");
     }
 
     @Override

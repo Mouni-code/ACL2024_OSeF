@@ -25,7 +25,7 @@ public class Main {
         // Créer une instance de la scène et l'ajouter à la fenêtre
         scene = new Scene(); // La scène gère l'affichage et l'interactivité
         frame.setContentPane(scene); // Ajouter la scène comme contenu principal
-
+        scene.init();
         // Afficher la fenêtre
         frame.setVisible(true);
         Thread chronoThread = new Thread(new Chrono());
