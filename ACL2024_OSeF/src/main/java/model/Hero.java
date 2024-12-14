@@ -1,11 +1,18 @@
 package model;
 
 public class Hero extends Character {
+    int startX;
+    int startY;
     private int vitesse ;
+    int inventaire;
 
-    public Hero(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int v) {
+    Treasure tresor;
+    Passage passage;
+
+    public Hero(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int v, int inventaire) {
         super( startX,  startY,  characterWIDTH,  characterHEIGHT,  lives,  health,  damage);
         vitesse = v ;
+        inventaire = 0;
     }
 
     public void moveHero(String direction) {
@@ -34,5 +41,28 @@ public class Hero extends Character {
 
     public void setVit( int v ){
         vitesse = v ;
+    }
+
+    public int getinventaire(){
+        return inventaire ;
+    }
+
+    public void setinventaire( int val ){
+        inventaire = val ;
+    }
+
+    public void remplirInventaire(){
+        if (startX == tresor.position.getX() && startY == tresor.position.getY()){
+            inventaire++;
+            System.out.println("L'inventaire est :"+ inventaire + " étoile(s)");
+        }
+    }
+    
+    public boolean pouvoirPassage(){
+        if (startX == passage.position.getX() && startY == passage.position.getY() && inventaire == 2){
+            System.out.println("Il peut passer");
+            return true;
+        }
+        return false;
     }
 }

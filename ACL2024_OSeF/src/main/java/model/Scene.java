@@ -14,7 +14,7 @@ import javax.swing.Timer;
 
 public class Scene extends JPanel implements KeyListener {
 
-    Hero hero = new Hero(100, 70, 50 , 50, 3, 100, 20, 1);
+    Hero hero = new Hero(100, 70, 50 , 50, 3, 100, 20, 1, 0);
     Monster monster = new Monster(350, 200, 50, 50, 1, 100, 20, 1, false);
     Monster monster2 = new Monster(500, 300, 50, 50, 1, 100, 20, 1, true);
     Ghost ghost1 = new Ghost(400, 400, 50, 50, 1, 100, 20, 1);
@@ -231,9 +231,17 @@ public class Scene extends JPanel implements KeyListener {
     }
 
     private void drawLaby(Graphics2D g2) {
-        labyDess.setNiveau(3);
+        int lvl = 0;
+        labyDess.setNiveau(lvl);
         labyDess.paintComponent(g2);
+
+        // if(hero.pouvoirPassage()){
+        //     lvl++;
+        //     labyDess.setNiveau(lvl);
+        //     repaint();
+        // }
     }
+
 
     private void attackHero(int enemyX, int enemyY) {
         if (enemyX == monsterX && monsterHealth <= 0) return;

@@ -99,6 +99,11 @@ protected void paintComponent(Graphics g) {
     ImageIcon icoPierre = new ImageIcon(getClass().getResource("/images/pierre.png"));
     Image imagePierre = icoPierre.getImage();
 
+    ImageIcon icotresor = new ImageIcon(getClass().getResource("/images/coffre.png"));
+    Image imagetresor = icotresor.getImage();
+
+    ImageIcon icopassage = new ImageIcon(getClass().getResource("/images/porte.png"));
+    Image imagepassage = icopassage.getImage();
     // Parcourir le labyrinthe et dessiner les murs
     for (int row = 0; row < maze.length; row++) {
         for (int col = 0; col < maze[row].length; col++) {
@@ -106,6 +111,16 @@ protected void paintComponent(Graphics g) {
                 int x = col * cellSize;
                 int y = row * cellSize;
                 g.drawImage(imagePierre, x, y, cellSize, cellSize, this);
+            }
+            if (maze[row][col] == 'T') { // Cas des tresor
+                int x = col * cellSize;
+                int y = row * cellSize;
+                g.drawImage(imagetresor, x, y, cellSize, cellSize, this);
+            }
+            if (maze[row][col] == 'P') { // Cas des passages
+                int x = col * cellSize;
+                int y = row * cellSize;
+                g.drawImage(imagepassage, x, y, cellSize, cellSize, this);
             }
             
         }
