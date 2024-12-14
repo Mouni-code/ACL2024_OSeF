@@ -18,7 +18,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme l'application quand la fenêtre est fermée
 
         // Configurer la fenêtre
-        frame.setSize(1000, 700); // Taille de la fenêtre
+        frame.setSize(1170, 720); // Taille de la fenêtre
         frame.setResizable(false); // Désactiver le redimensionnement
         frame.setLocationRelativeTo(null); // Centrer la fenêtre sur l'écran
 

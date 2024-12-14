@@ -231,7 +231,7 @@ public class Scene extends JPanel implements KeyListener {
     }
 
     private void drawLaby(Graphics2D g2) {
-        labyDess.setNiveau(0);
+        labyDess.setNiveau(3);
         labyDess.paintComponent(g2);
     }
 
