@@ -1,4 +1,5 @@
 package model;
+//SOUCIS : YOU DIED Dès le début!
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,11 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import engine.GlobalKeyListener;
-
 public class Scene extends JPanel implements KeyListener {
 
-    Hero hero = new Hero(280, 50, 10 , 10, 3, 100, 20, 2, 0);
+    Hero hero = new Hero(100, 70, 50 , 50, 3, 100, 20, 1, 0);
     Monster monster = new Monster(350, 200, 50, 50, 1, 100, 20, 1, false);
     Monster monster2 = new Monster(500, 300, 50, 50, 1, 100, 20, 1, true);
     Ghost ghost1 = new Ghost(400, 400, 50, 50, 1, 100, 20, 1);
@@ -47,16 +46,16 @@ public class Scene extends JPanel implements KeyListener {
     private ImageIcon icoYouDied;
     private Image imageYouDied;
 
+    // Charger l'image "pierre.png"
     private ImageIcon icoPierre;
     private Image imagePierre;
 
-    private ImageIcon icotresor;
+    private ImageIcon icotresor ;
     private Image imagetresor;
 
     private ImageIcon icopassage;
     private Image imagepassage;
-
-
+    // Parcourir le labyrinthe et dessiner les murs
      
     int ghost1X = ghost1.getPosition().get(0);
     int ghost1Y = ghost1.getPosition().get(1);
@@ -68,9 +67,9 @@ public class Scene extends JPanel implements KeyListener {
     int heroMaxHealth = 100;
     int heroLives = hero.lives;
     private int monsterMaxHealth = 100;
-    private int monster2X;
-    private int monster2Y;
-    private int monster2Health;
+    private int monster2X = monster2.getPosition().get(0);
+    private int monster2Y = monster2.getPosition().get(1);
+    private int monster2Health = monster2.health;
     private int monster2MaxHealth = 100;
     private int ghost1MaxHealth = 100;
     private int[][] ghost1Targets = new int[5][2];
@@ -89,8 +88,6 @@ public class Scene extends JPanel implements KeyListener {
 
     Position heroPosition = new Position(heroX, heroY);
 
-    GlobalKeyListener gkl = new GlobalKeyListener();
-
     private boolean isCollision = false;
     private Timer collisionTimer;
     private int collisionDuration = 500;
@@ -103,7 +100,7 @@ public class Scene extends JPanel implements KeyListener {
     public Scene() {
         super();
 
-        // Charger les images
+      
         icofond = new ImageIcon(getClass().getResource("/images/fondecran.png"));
         this.imagefond = this.icofond.getImage();
 
@@ -119,7 +116,6 @@ public class Scene extends JPanel implements KeyListener {
         icoYouDied = new ImageIcon(getClass().getResource("/images/youdied.png"));
         this.imageYouDied = this.icoYouDied.getImage();
 
-
         icoPierre = new ImageIcon(getClass().getResource("/images/pierre.png"));
         this.imagePierre = icoPierre.getImage();
 
@@ -129,15 +125,16 @@ public class Scene extends JPanel implements KeyListener {
         icopassage = new ImageIcon(getClass().getResource("/images/porte.png"));
         this.imagepassage = icopassage.getImage();
 
+
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(this);
 
         //public Character(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage)
 
-        generateRandomPoints(ghost1Targets);
-        generateRandomPoints(ghost2Targets);
-        generateRandomPoints(ghost3Targets);
+        generateTreasurePoints(ghost1Targets, 1);
+        generateTreasurePoints(ghost2Targets, 2);
+        generateTreasurePoints(ghost3Targets, 3);
 
         Timer moveTimer = new Timer(100, e -> {
             suivreHero(monsterX, monsterY, false);
@@ -147,7 +144,7 @@ public class Scene extends JPanel implements KeyListener {
             moveGhostToNextPoint(ghost2X, ghost2Y, ghost2Targets, ghost2TargetIndex, true, 2);
             moveGhostToNextPoint(ghost3X, ghost3Y, ghost3Targets, ghost3TargetIndex, true, 3);
 
-            // Attaquer uniquement si la santé du monstre/ghost est > 0
+           
             if (monsterHealth > 0) attackHero(monsterX, monsterY);
             if (monster2Health > 0) attackHero(monster2X, monster2Y);
             if (ghost1Health > 0) attackHero(ghost1X, ghost1Y);
@@ -175,8 +172,9 @@ public class Scene extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        
         char[][] maze = labyDess.getMaze();
-        final int cellSize = 40;
+        int cellSize = 40;
 
         g2.drawImage(this.imagefond, 0, 0, null);
         drawLaby(g2);
@@ -197,17 +195,17 @@ public class Scene extends JPanel implements KeyListener {
                 if (maze[row][col] == '#') { // Cas des murs
                     int x = col * cellSize;
                     int y = row * cellSize;
-                    g.drawImage(this.imagePierre, x, y, cellSize, cellSize, this);
+                    g.drawImage(imagePierre, x, y, cellSize, cellSize, this);
                 }
                 if (maze[row][col] == 'T') { // Cas des tresor
                     int x = col * cellSize;
                     int y = row * cellSize;
-                    g.drawImage(this.imagetresor, x, y, cellSize, cellSize, this);
+                    g.drawImage(imagetresor, x, y, cellSize, cellSize, this);
                 }
                 if (maze[row][col] == 'P') { // Cas des passages
                     int x = col * cellSize;
                     int y = row * cellSize;
-                    g.drawImage(this.imagepassage, x, y, cellSize, cellSize, this);
+                    g.drawImage(imagepassage, x, y, cellSize, cellSize, this);
                 }
                 
             }
@@ -280,7 +278,6 @@ public class Scene extends JPanel implements KeyListener {
     private void drawLaby(Graphics2D g2) {
         int lvl = 0;
         labyDess.setNiveau(lvl);
-
         // if(hero.pouvoirPassage()){
         //     lvl++;
         //     labyDess.setNiveau(lvl);
@@ -301,30 +298,30 @@ public class Scene extends JPanel implements KeyListener {
     
         if (distanceX < 50 && distanceY < 50) {
             if (!isCollision) {
-                //pushHeroBack(enemyX, enemyY); // Appeler la méthode pour reculer
+                pushHeroBack(enemyX, enemyY);
                 startCollision();
             }
         }
     }
     
 
-    // private void pushHeroBack(int attackerX, int attackerY) {
-    //     int pushDistance = 20;
+    private void pushHeroBack(int attackerX, int attackerY) {
+        int pushDistance = 20;
     
-    //     // Calcul de la position temporaire du héros après le recul
-    //     int newHeroX = heroX;
-    //     int newHeroY = heroY;
+        
+        int newHeroX = heroX;
+        int newHeroY = heroY;
     
-    //     if (attackerX < heroX) newHeroX += pushDistance;
-    //     else if (attackerX > heroX) newHeroX -= pushDistance;
+        if (attackerX < heroX) newHeroX += pushDistance;
+        else if (attackerX > heroX) newHeroX -= pushDistance;
     
-    //     if (attackerY < heroY) newHeroY += pushDistance;
-    //     else if (attackerY > heroY) newHeroY -= pushDistance;
+        if (attackerY < heroY) newHeroY += pushDistance;
+        else if (attackerY > heroY) newHeroY -= pushDistance;
     
-    //     // Correction des positions pour éviter de sortir des bordures
-    //     heroX = Math.max(0, Math.min(newHeroX, MAP_WIDTH - heroWidth));
-    //     heroY = Math.max(0, Math.min(newHeroY, MAP_HEIGHT - heroHeight));
-    // }
+    
+        heroX = Math.max(0, Math.min(newHeroX, MAP_WIDTH - heroWidth));
+        heroY = Math.max(0, Math.min(newHeroY, MAP_HEIGHT - heroHeight));
+    }
     
    // Méthode pour déplacer le monstre toutes les secondes (ou un autre intervalle)
     // Method for moving the monsters
@@ -345,38 +342,88 @@ public class Scene extends JPanel implements KeyListener {
         collisionTimer.start();
     }
 
-    private void generateRandomPoints(int[][] targets) {
-        for(int i = 0; i < targets.length; i++) {
-            targets[i][0] = random.nextInt(MAP_WIDTH - 50);
-            targets[i][1] = random.nextInt(MAP_HEIGHT - 50);
+    private void generateTreasurePoints(int[][] targets, int ghostNumber) {
+        char[][] maze = labyDess.getMaze();
+        int[] treasureX = new int[2];
+        int[] treasureY = new int[2];
+        int treasureCount = 0;
+        
+        
+        // position des tresaores 
+        for (int y = 0; y < maze.length && treasureCount < 2; y++) {
+            for (int x = 0; x < maze[0].length && treasureCount < 2; x++) {
+                if (maze[y][x] == 'T') {
+                    
+                    
+                    treasureX[treasureCount] = (x * 40)-60 ;  
+                    treasureY[treasureCount] = (y * 40)-50 ;
+                    
+                    treasureCount++;
+                }
+            }
+        }
+
+      
+       
+        if (treasureCount == 0) {
+            treasureX[0] = 560;
+            treasureY[0] = 360;
+            treasureX[1] = 800;
+            treasureY[1] = 360;
+        } else if (treasureCount == 1) {
+            treasureX[1] = treasureX[0] + 240;
+            treasureY[1] = treasureY[0];
+        }
+
+       // 2 ghosts pour le premier tresore et un pour lautre avec un rayon de 90
+        int selectedTreasure = (ghostNumber <= 2) ? 0 : 1;
+        int radius = 90;  
+
+        // les points du cercle ou les ghosts vont tourner
+        for (int i = 0; i < targets.length; i++) {
+            double angle = 2 * Math.PI * i / targets.length;
+            int pointX = treasureX[selectedTreasure] + (int)(radius * Math.cos(angle));
+            int pointY = treasureY[selectedTreasure] + (int)(radius * Math.sin(angle));
+            
+            targets[i][0] = pointX;
+            targets[i][1] = pointY;
+           
         }
     }
 
     private void moveGhostToNextPoint(int ghostX, int ghostY, int[][] targets, int targetIndex, boolean isGhost, int ghostNumber) {
         int targetX = targets[targetIndex][0];
         int targetY = targets[targetIndex][1];
+        int newGhostX = ghostX;
+        int newGhostY = ghostY;
+    
+        double dx = targetX - ghostX;
+        double dy = targetY - ghostY;
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance > GHOST_STEP) {
+            newGhostX += (dx / distance) * GHOST_STEP;
+            newGhostY += (dy / distance) * GHOST_STEP;
+        }
 
-        if (ghostX < targetX) ghostX += GHOST_STEP;
-        if (ghostX > targetX) ghostX -= GHOST_STEP;
-        if (ghostY < targetY) ghostY += GHOST_STEP;
-        if (ghostY > targetY) ghostY -= GHOST_STEP;
-
-        if (Math.abs(ghostX - targetX) < GHOST_STEP && Math.abs(ghostY - targetY) < GHOST_STEP) {
+        
+        if (distance < GHOST_STEP * 2) {
             targetIndex = (targetIndex + 1) % targets.length;
         }
 
+        
         if (isGhost) {
             if (ghostNumber == 1) {
-                ghost1X = ghostX;
-                ghost1Y = ghostY;
+                ghost1X = newGhostX;
+                ghost1Y = newGhostY;
                 ghost1TargetIndex = targetIndex;
             } else if (ghostNumber == 2) {
-                ghost2X = ghostX;
-                ghost2Y = ghostY;
+                ghost2X = newGhostX;
+                ghost2Y = newGhostY;
                 ghost2TargetIndex = targetIndex;
             } else if (ghostNumber == 3) {
-                ghost3X = ghostX;
-                ghost3Y = ghostY;
+                ghost3X = newGhostX;
+                ghost3Y = newGhostY;
                 ghost3TargetIndex = targetIndex;
             }
         }
@@ -487,7 +534,7 @@ public class Scene extends JPanel implements KeyListener {
         // Debug final
         System.out.println("DEBUG: Nouvelle position - X: " + heroX + ", Y: " + heroY);
     }
-     
+   
     // Méthodes d'assistance pour vérifier les collisions
     private boolean isWallAtRight(char[][] maze, int caseX, int caseY) {
         return (maze[caseY + 1][caseX + 1] != ' ' && heroY / 20.0 - caseY != 0.0) 
@@ -509,31 +556,32 @@ public class Scene extends JPanel implements KeyListener {
                || (heroX / 20.0 - caseX != 0 && maze[caseY + 1][caseX + 1] != ' ');
     }
 
- 
+    
+
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-    switch (keyCode) {
-             case KeyEvent.VK_UP:
-                 moveHero("UP");
-                 break;
-             case KeyEvent.VK_DOWN:
-                 moveHero("DOWN");
-                 break;
-             case KeyEvent.VK_LEFT:
-                 moveHero("LEFT");
-                 break;
-             case KeyEvent.VK_RIGHT:
-                 moveHero("RIGHT");
-                 break;
-            case KeyEvent.VK_SPACE:
-             heroAttack();
-               break;
-               default:
-           System.out.println("Touche non prise en charge !");
-          break;
-         }
-            repaint();
+        
+        // Gérer le mouvement et l'attaque séparément
+        if (keyCode == KeyEvent.VK_SPACE) {
+            heroAttack();
+        } else {
+            switch (keyCode) {
+                case KeyEvent.VK_UP:
+                    moveHero("UP");
+                    break;
+                case KeyEvent.VK_DOWN:
+                    moveHero("DOWN");
+                    break;
+                case KeyEvent.VK_LEFT:
+                    moveHero("LEFT");
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    moveHero("RIGHT");
+                    break;
+            }
+        }
+        repaint();
     }
     
 
@@ -562,4 +610,3 @@ public class Scene extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
 }
-
