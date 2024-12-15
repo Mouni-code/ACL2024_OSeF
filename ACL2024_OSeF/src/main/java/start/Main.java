@@ -22,11 +22,11 @@ public class Main {
         frame.setResizable(false); // Désactiver le redimensionnement
         frame.setLocationRelativeTo(null); // Centrer la fenêtre sur l'écran
 
-        // Créer une instance de la scène et l'ajouter à la fenêtre
-        scene = new Scene(); // La scène gère l'affichage et l'interactivité
-        frame.setContentPane(scene); // Ajouter la scène comme contenu principal
+        
+        scene = new Scene(); 
+        frame.setContentPane(scene); 
         scene.init();
-        // Afficher la fenêtre
+       
         frame.setVisible(true);
         Thread chronoThread = new Thread(new Chrono());
         chronoThread.start();
