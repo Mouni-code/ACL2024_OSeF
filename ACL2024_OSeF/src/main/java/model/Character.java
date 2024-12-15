@@ -11,7 +11,9 @@ public abstract class Character {
     public int characterWIDTH;
     public int characterHEIGHT;
 
-    public Scene scene;
+    public Scene scene; 
+
+    
     public Character(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage) {
         this.position = new Position(startX, startY);
         this.lives = lives;

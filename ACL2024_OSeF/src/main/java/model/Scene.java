@@ -346,7 +346,7 @@ public class Scene extends JPanel implements KeyListener {
     }
 
     private void generateRandomPoints(int[][] targets) {
-        for (int i = 0; i < targets.length; i++) {
+        for(int i = 0; i < targets.length; i++) {
             targets[i][0] = random.nextInt(MAP_WIDTH - 50);
             targets[i][1] = random.nextInt(MAP_HEIGHT - 50);
         }

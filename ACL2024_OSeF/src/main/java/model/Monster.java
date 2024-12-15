@@ -8,7 +8,7 @@ public class Monster extends Character {
 
     public Monster(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int speed, boolean isIntelligent) {
         super( startX,  startY,  characterWIDTH,  characterHEIGHT,  lives,  health,  damage);
-        this.health = 75;
+        this.health = 100;
         this.damage = 15;
         this.speed = 1;
         this.isIntelligent = isIntelligent;
