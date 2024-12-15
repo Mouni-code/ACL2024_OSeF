@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Case {
+public abstract class Case  {
     protected Position position;
 
     public Case(Position position) {

@@ -1,12 +1,17 @@
 package model;
 //A VOIR SI ON LAJOUTE
-public class Ghost extends Character {
+public class Ghost extends Element {
 
-    int speed;
+    int speedx;
+    int speedy;
 
-    public Ghost(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int speed) {
-        super( startX,  startY,  characterWIDTH,  characterHEIGHT,  lives,  health,  damage);
-        this.speed = 1;
+    public Ghost(int x, int y, int WIDTH, int HEIGHT, int lives, int health, int damage, int speedx , int speedy) {
+        super( x,  y,  WIDTH,  HEIGHT);
+        this.speedx = speedx;
+        this.speedy = speedy;
+        this.lives = lives;
+        this.health = health;
+        this.damage = damage;
     }
 
 }
