@@ -1,11 +1,8 @@
 package model;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel ;
+import javax.swing.JPanel;
 
 public class LabyDess extends JPanel { 
     private int x, y ; // position en pixel
@@ -36,19 +33,19 @@ public class LabyDess extends JPanel {
     
     //Cette partie lit dans quel laby de "Labyrinthe" on est et le reecrit en char dans "maze"
     public void remplirMaze() {
-        System.out.println("Chargement du niveau : " + getNiveau());
+        //System.out.println("Chargement du niveau : " + getNiveau());
         boolean niveauTrouve = false;
     
         // Parcours de tous les labyrinthes
         for (int n = 0; n < labyrinthe.TousLesLaby.size(); n++) {
             // Récupération de l'identifiant du niveau courant et nettoyage avec trim()
             String niveauActuel = labyrinthe.TousLesLaby.get(n).get(0).trim();
-            System.out.println("Vérification niveau dans TousLesLaby : " + niveauActuel + " (Attendu : niv" + getNiveau() + ")");
+            //System.out.println("Vérification niveau dans TousLesLaby : " + niveauActuel + " (Attendu : niv" + getNiveau() + ")");
     
             // Vérification de la correspondance avec le niveau attendu
             if (niveauActuel.equals("niv" + getNiveau())) {
                 niveauTrouve = true;
-                System.out.println("Correspondance trouvée pour : " + niveauActuel);
+                //System.out.println("Correspondance trouvée pour : " + niveauActuel);
     
                 // Extraction des données du labyrinthe pour ce niveau
                 List<String> niv_nLabyrinthe = labyrinthe.TousLesLaby.get(n);
@@ -90,41 +87,5 @@ public class LabyDess extends JPanel {
     public int getNiveau(){
         return niv ;
     }
-@Override
-protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    int lvl = this.getNiveau();
-
-    // Charger l'image "pierre.png"
-    ImageIcon icoPierre = new ImageIcon(getClass().getResource("/images/pierre.png"));
-    Image imagePierre = icoPierre.getImage();
-
-    ImageIcon icotresor = new ImageIcon(getClass().getResource("/images/coffre.png"));
-    Image imagetresor = icotresor.getImage();
-
-    ImageIcon icopassage = new ImageIcon(getClass().getResource("/images/porte.png"));
-    Image imagepassage = icopassage.getImage();
-    // Parcourir le labyrinthe et dessiner les murs
-    for (int row = 0; row < maze.length; row++) {
-        for (int col = 0; col < maze[row].length; col++) {
-            if (maze[row][col] == '#') { // Cas des murs
-                int x = col * cellSize;
-                int y = row * cellSize;
-                g.drawImage(imagePierre, x, y, cellSize, cellSize, this);
-            }
-            if (maze[row][col] == 'T') { // Cas des tresor
-                int x = col * cellSize;
-                int y = row * cellSize;
-                g.drawImage(imagetresor, x, y, cellSize, cellSize, this);
-            }
-            if (maze[row][col] == 'P') { // Cas des passages
-                int x = col * cellSize;
-                int y = row * cellSize;
-                g.drawImage(imagepassage, x, y, cellSize, cellSize, this);
-            }
-            
-        }
-    }
-}
 
 }

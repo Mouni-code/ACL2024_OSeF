@@ -1,5 +1,4 @@
 package model;
-//SOUCIS : YOU DIED Dès le début!
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,9 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import engine.GlobalKeyListener;
+
 public class Scene extends JPanel implements KeyListener {
 
-    Hero hero = new Hero(100, 70, 50 , 50, 3, 100, 20, 1, 0);
+    Hero hero = new Hero(280, 50, 10 , 10, 3, 100, 20, 2, 0);
     Monster monster = new Monster(350, 200, 50, 50, 1, 100, 20, 1, false);
     Monster monster2 = new Monster(500, 300, 50, 50, 1, 100, 20, 1, true);
     Ghost ghost1 = new Ghost(400, 400, 50, 50, 1, 100, 20, 1);
@@ -45,6 +46,17 @@ public class Scene extends JPanel implements KeyListener {
 
     private ImageIcon icoYouDied;
     private Image imageYouDied;
+
+    private ImageIcon icoPierre;
+    private Image imagePierre;
+
+    private ImageIcon icotresor;
+    private Image imagetresor;
+
+    private ImageIcon icopassage;
+    private Image imagepassage;
+
+
      
     int ghost1X = ghost1.getPosition().get(0);
     int ghost1Y = ghost1.getPosition().get(1);
@@ -77,6 +89,8 @@ public class Scene extends JPanel implements KeyListener {
 
     Position heroPosition = new Position(heroX, heroY);
 
+    GlobalKeyListener gkl = new GlobalKeyListener();
+
     private boolean isCollision = false;
     private Timer collisionTimer;
     private int collisionDuration = 500;
@@ -104,6 +118,16 @@ public class Scene extends JPanel implements KeyListener {
 
         icoYouDied = new ImageIcon(getClass().getResource("/images/youdied.png"));
         this.imageYouDied = this.icoYouDied.getImage();
+
+
+        icoPierre = new ImageIcon(getClass().getResource("/images/pierre.png"));
+        this.imagePierre = icoPierre.getImage();
+
+        icotresor = new ImageIcon(getClass().getResource("/images/coffre.png"));
+        this.imagetresor = icotresor.getImage();
+
+        icopassage = new ImageIcon(getClass().getResource("/images/porte.png"));
+        this.imagepassage = icopassage.getImage();
 
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -151,6 +175,8 @@ public class Scene extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        char[][] maze = labyDess.getMaze();
+        final int cellSize = 40;
 
         g2.drawImage(this.imagefond, 0, 0, null);
         drawLaby(g2);
@@ -164,6 +190,27 @@ public class Scene extends JPanel implements KeyListener {
 
             g2.drawImage(this.imageYouDied, centerX, centerY, null);
             return;
+        }
+
+        for (int row = 0; row < maze.length; row++) {
+            for (int col = 0; col < maze[row].length; col++) {
+                if (maze[row][col] == '#') { // Cas des murs
+                    int x = col * cellSize;
+                    int y = row * cellSize;
+                    g.drawImage(this.imagePierre, x, y, cellSize, cellSize, this);
+                }
+                if (maze[row][col] == 'T') { // Cas des tresor
+                    int x = col * cellSize;
+                    int y = row * cellSize;
+                    g.drawImage(this.imagetresor, x, y, cellSize, cellSize, this);
+                }
+                if (maze[row][col] == 'P') { // Cas des passages
+                    int x = col * cellSize;
+                    int y = row * cellSize;
+                    g.drawImage(this.imagepassage, x, y, cellSize, cellSize, this);
+                }
+                
+            }
         }
 
         g2.drawImage(this.imagehero, heroX, heroY, null);
@@ -233,7 +280,6 @@ public class Scene extends JPanel implements KeyListener {
     private void drawLaby(Graphics2D g2) {
         int lvl = 0;
         labyDess.setNiveau(lvl);
-        labyDess.paintComponent(g2);
 
         // if(hero.pouvoirPassage()){
         //     lvl++;
@@ -255,30 +301,30 @@ public class Scene extends JPanel implements KeyListener {
     
         if (distanceX < 50 && distanceY < 50) {
             if (!isCollision) {
-                pushHeroBack(enemyX, enemyY); // Appeler la méthode pour reculer
+                //pushHeroBack(enemyX, enemyY); // Appeler la méthode pour reculer
                 startCollision();
             }
         }
     }
     
 
-    private void pushHeroBack(int attackerX, int attackerY) {
-        int pushDistance = 20;
+    // private void pushHeroBack(int attackerX, int attackerY) {
+    //     int pushDistance = 20;
     
-        // Calcul de la position temporaire du héros après le recul
-        int newHeroX = heroX;
-        int newHeroY = heroY;
+    //     // Calcul de la position temporaire du héros après le recul
+    //     int newHeroX = heroX;
+    //     int newHeroY = heroY;
     
-        if (attackerX < heroX) newHeroX += pushDistance;
-        else if (attackerX > heroX) newHeroX -= pushDistance;
+    //     if (attackerX < heroX) newHeroX += pushDistance;
+    //     else if (attackerX > heroX) newHeroX -= pushDistance;
     
-        if (attackerY < heroY) newHeroY += pushDistance;
-        else if (attackerY > heroY) newHeroY -= pushDistance;
+    //     if (attackerY < heroY) newHeroY += pushDistance;
+    //     else if (attackerY > heroY) newHeroY -= pushDistance;
     
-        // Correction des positions pour éviter de sortir des bordures
-        heroX = Math.max(0, Math.min(newHeroX, MAP_WIDTH - heroWidth));
-        heroY = Math.max(0, Math.min(newHeroY, MAP_HEIGHT - heroHeight));
-    }
+    //     // Correction des positions pour éviter de sortir des bordures
+    //     heroX = Math.max(0, Math.min(newHeroX, MAP_WIDTH - heroWidth));
+    //     heroY = Math.max(0, Math.min(newHeroY, MAP_HEIGHT - heroHeight));
+    // }
     
    // Méthode pour déplacer le monstre toutes les secondes (ou un autre intervalle)
     // Method for moving the monsters
@@ -361,128 +407,133 @@ public class Scene extends JPanel implements KeyListener {
         }
     }
 
-
-    
-
     public void moveHero(String direction) {
-        // Chargement du labyrinthe
-        int lvl = labyDess.getNiveau();
         char[][] maze = labyDess.getMaze();
-    
-        if (heroLives <= 0) {
-            return; // Le héros ne peut plus bouger s'il n'a plus de vies
-        }
-    
-        // Dimensions de la carte et du héros
-        final int mapWidth = this.getWidth();
-        final int mapHeight = this.getHeight();
         final int cellSize = 40;
-        final int moveStep = 10; // Pas de déplacement
-        boolean collision = false;
     
-        // Sauvegarde de la position initiale du héros
-        int posX = heroX;
-        int posY = heroY;
+        // Vérifiez que le héros est vivant
+        if (heroLives <= 0) {
+            System.out.println("DEBUG: Héros sans vie, pas de mouvement");
+            return;
+        }
     
-        // Calcul des nouvelles coordonnées selon la direction
-        switch (direction.toUpperCase()) {
-            case "UP":
-                if (heroY > 0) { // Limites hautes
-                    for (int x = heroX; x < heroX + heroWidth; x += cellSize) {
-                        int caseXToCheck = x / cellSize;
-                        int caseYToCheck = (heroY + 4 * moveStep) / cellSize; // Position future (haut)
-                        if (maze[caseYToCheck][caseXToCheck] == '#') {
-                            collision = true;
-                            break;
-                        }
-                    }
-                    if (!collision) heroY -= moveStep; // Déplacement effectif
-                }
-                break;
+        // Debug initial
+        System.out.println("DEBUG: Tentative de déplacement - Direction: " + direction);
+        System.out.println("DEBUG: Position initiale - X: " + heroX + ", Y: " + heroY);
     
-            case "DOWN":
-                if (heroY + heroHeight < mapHeight) { // Limites basses
-                    for (int x = heroX; x < heroX + heroWidth; x += cellSize) {
-                        int caseXToCheck = x / cellSize;
-                        int caseYToCheck = (heroY + 4 * moveStep + heroHeight) / cellSize; // Position future (bas)
-                        if (maze[caseYToCheck][caseXToCheck] == '#') {
-                            collision = true;
-                            break;
-                        }
-                    }
-                    if (!collision) heroY += moveStep; // Déplacement effectif
-                }
-                break;
+        // Sauvegarde de la position initiale en cas de collision
+        int initialX = heroX;
+        int initialY = heroY;
     
-            case "LEFT":
-                if (heroX > 0) { // Limites gauche
-                    for (int y = heroY; y < heroY + heroHeight; y += cellSize) {
-                        int caseXToCheck = (heroX - moveStep) / cellSize;
-                        int caseYToCheck = y / cellSize;
-                        if (maze[caseYToCheck][caseXToCheck] == '#') {
-                            collision = true;
-                            break;
-                        }
-                    }
-                    if (!collision) heroX -= moveStep; // Déplacement effectif
-                }
-                break;
+        // Calcul de la position actuelle dans la grille
+        int caseX = heroX / cellSize;
+        int caseY = heroY / cellSize;
     
+        // Déplacement principal
+        switch (direction) {
             case "RIGHT":
-                if (heroX + heroWidth < mapWidth) { // Limites droite
-                    for (int y = heroY; y < heroY + heroHeight; y += cellSize) {
-                        int caseXToCheck = (heroX + moveStep + heroWidth - 1) / cellSize;
-                        int caseYToCheck = y / cellSize;
-                        if (maze[caseYToCheck][caseXToCheck] == '#') {
-                            collision = true;
-                            break;
-                        }
-                    }
-                    if (!collision) heroX += moveStep; // Déplacement effectif
+                heroX += hero.vitesse;
+                if (isWallAtRight(maze, caseX, caseY)) {
+                    heroX = initialX;
+                    // Alternative : déplacement en haut ou en bas
+                    
+                }
+                if (isWallAtTop(maze, caseX, caseY) || isWallAtBottom(maze, caseX, caseY) || isWallAtRight(maze, caseX, caseY - 1) || isWallAtLeft(maze, caseX, caseY - 1) || isWallAtLeft(maze, caseX, caseY + 1) || isWallAtRight(maze, caseX, caseY+1) ) {
+                    heroX += hero.vitesse;
+                } 
+                break;
+            case "LEFT":
+                heroX -= hero.vitesse;
+                if (isWallAtLeft(maze, caseX, caseY)) {
+                    heroX = initialX;
+                    // Alternative : déplacement en haut ou en bas
+                    
+                }
+                if (isWallAtTop(maze, caseX, caseY) || isWallAtBottom(maze, caseX, caseY)|| isWallAtRight(maze, caseX, caseY - 1) || isWallAtLeft(maze, caseX, caseY - 1)|| isWallAtLeft(maze, caseX, caseY + 1) || isWallAtRight(maze, caseX, caseY+1)) {
+                    heroX -= hero.vitesse;
                 }
                 break;
-    
-            default:
-                System.out.println("Direction non valide !");
+            case "UP":
+                heroY -= hero.vitesse;
+                if (isWallAtTop(maze, caseX, caseY)) {
+                    heroY = initialY;
+                    // Alternative : déplacement à gauche ou à droite
+                    
+                }
+                if (isWallAtLeft(maze, caseX, caseY) || isWallAtRight(maze, caseX, caseY) || isWallAtBottom(maze, caseX, caseY) || isWallAtLeft(maze, caseX, caseY -1) || isWallAtRight(maze, caseX, caseY - 1) || isWallAtLeft(maze, caseX, caseY + 1) || isWallAtRight(maze, caseX, caseY + 1)) {
+                    heroY -= hero.vitesse; 
+                }
                 break;
+            case "DOWN":
+                heroY += hero.vitesse;
+                if (isWallAtBottom(maze, caseX, caseY)) {
+                    heroY = initialY;
+                    // Alternative : déplacement à gauche ou à droite
+                    
+                }
+                if (isWallAtLeft(maze, caseX, caseY) || isWallAtRight(maze, caseX, caseY) || isWallAtTop(maze, caseX, caseY) || isWallAtLeft(maze, caseX, caseY -1) || isWallAtRight(maze, caseX, caseY - 1) || isWallAtLeft(maze, caseX, caseY + 1) || isWallAtRight(maze, caseX, caseY + 1)) {
+                    heroY += hero.vitesse;
+                }
+                break;
+            default:
+                System.out.println("DEBUG: Direction invalide");
+                return;
         }
     
-        // Gestion de la collision
-        if (collision) {
-            heroX = posX; // Annuler le déplacement (X)
-            heroY = posY; // Annuler le déplacement (Y)
-            System.out.println("Collision détectée !");
-        }
+        // Mettre à jour la position du héros
+        hero.position.setX(heroX);
+        hero.position.setY(heroY);
     
-        // Affichage de la position actuelle
-        System.out.println("Position actuelle du héros : (" + heroX + ", " + heroY + ")");
+        // Debug final
+        System.out.println("DEBUG: Nouvelle position - X: " + heroX + ", Y: " + heroY);
+    }
+     
+    // Méthodes d'assistance pour vérifier les collisions
+    private boolean isWallAtRight(char[][] maze, int caseX, int caseY) {
+        return (maze[caseY + 1][caseX + 1] != ' ' && heroY / 20.0 - caseY != 0.0) 
+               || maze[caseY][caseX + 1] != ' ';
     }
     
+    private boolean isWallAtLeft(char[][] maze, int caseX, int caseY) {
+        return maze[caseY][caseX - 1] != ' ' 
+               || (heroY / 20.0 - caseY != 0 && maze[caseY + 1][caseX - 1] != ' ');
+    }
+    
+    private boolean isWallAtTop(char[][] maze, int caseX, int caseY) {
+        return maze[caseY - 1][caseX] != ' ' 
+               || (heroX / 20.0 - caseX != 0 && maze[caseY - 1][caseX + 1] != ' ');
+    }
+    
+    private boolean isWallAtBottom(char[][] maze, int caseX, int caseY) {
+        return maze[caseY + 1][caseX] != ' ' 
+               || (heroX / 20.0 - caseX != 0 && maze[caseY + 1][caseX + 1] != ' ');
+    }
 
+ 
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_UP:
-                moveHero("UP");
-                break;
-            case KeyEvent.VK_DOWN:
-                moveHero("DOWN");
-                break;
-            case KeyEvent.VK_LEFT:
-                moveHero("LEFT");
-                break;
-            case KeyEvent.VK_RIGHT:
-                moveHero("RIGHT");
-                break;
+    switch (keyCode) {
+             case KeyEvent.VK_UP:
+                 moveHero("UP");
+                 break;
+             case KeyEvent.VK_DOWN:
+                 moveHero("DOWN");
+                 break;
+             case KeyEvent.VK_LEFT:
+                 moveHero("LEFT");
+                 break;
+             case KeyEvent.VK_RIGHT:
+                 moveHero("RIGHT");
+                 break;
             case KeyEvent.VK_SPACE:
-                heroAttack();
-                break;
-            default:
-                System.out.println("Touche non prise en charge !");
-                break;
-        }
-        repaint();
+             heroAttack();
+               break;
+               default:
+           System.out.println("Touche non prise en charge !");
+          break;
+         }
+            repaint();
     }
     
 

@@ -3,7 +3,7 @@ package model;
 public class Hero extends Character {
     int startX;
     int startY;
-    private int vitesse ;
+    int vitesse ;
     int inventaire;
 
     Treasure tresor;
