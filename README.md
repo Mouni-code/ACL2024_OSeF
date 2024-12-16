@@ -65,7 +65,7 @@ Le jeu se lance alors dans une fenêtre graphique, prêt à être joué !
 ### 🎮 Instructions de Jeu
 - **Déplacement** : Utilisez les touches UP, DOWN, LEFT, RIGHT pour déplacer le héros.
 - **Attaque** : Appuyez sur ESPACE pour attaquer les monstres.
--**Collecte d'étoiles** : Appuyez sur G pour ramasser des trésors et collecter des étoiles.
+- **Collecte d'étoiles** : Appuyez sur G pour ramasser des trésors et collecter des étoiles.
 #### Objectif :
 Explorez chaque labyrinthe.
 Combattez les monstres et collectez deux étoiles pour accéder au niveau suivant.
