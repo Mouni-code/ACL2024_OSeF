@@ -35,6 +35,8 @@ public class Element {
     public void reset() {
         this.x = this.startX;
         this.y = this.startY;
+        this.velocityX = 0;
+        this.velocityY =0;
     }
 
     public int getX() {

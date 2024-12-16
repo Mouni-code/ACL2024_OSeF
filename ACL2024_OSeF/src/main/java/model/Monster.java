@@ -1,9 +1,6 @@
 package model;
 
 public class Monster extends Element {
-     boolean isIntelligent;
-     int speedx;
-     int speedy;
 
 
     public Monster(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int speedx, int speedy, boolean isIntelligent) {
@@ -11,9 +8,6 @@ public class Monster extends Element {
         this.position = new Position(startX, startY);
         this.health = 100;
         this.damage = 15;
-        this.speedx = speedx;
-        this.speedy = speedy;
-        this.isIntelligent = isIntelligent;
     }
 
     

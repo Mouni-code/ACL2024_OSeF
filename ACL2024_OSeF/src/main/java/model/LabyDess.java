@@ -4,14 +4,10 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-public class LabyDess extends JPanel { 
-    private int x, y ; // position en pixel
-    //public Hero hero ;
-    private Labyrinthe labyrinthe ;
+public final class LabyDess extends JPanel { 
+    private final Labyrinthe labyrinthe ;
     private int niv ;
     public  char[][] maze ; // labyrinthe actuel
-    private int cellSize = 40 ; // Taille de chaque cellule en pixels
-
     public LabyDess(Labyrinthe obj) { //prend un tableau 2D de caractères (char[][]) représentant le labyrinthe
         //this.x = 0*cellSize ; this.y = 5*cellSize ; //La position de départ est un nombre entier de fois la taille d'une case, mais plus tard on peut se déplacer pixels âr pixels
         //this.hero = new Hero(x, y, 7) ;
@@ -25,8 +21,8 @@ public class LabyDess extends JPanel {
         int lvl = labydess.getNiveau();
         System.out.println("Niveau actuel : " + lvl);
 
-        for(int n = 0; n< labyrinthe.TousLesLaby.size(); n++){
-            System.out.println("Index " + n + ": " + labyrinthe.TousLesLaby.get(n));
+        for(int n = 0; n< Labyrinthe.TousLesLaby.size(); n++){
+            System.out.println("Index " + n + ": " + Labyrinthe.TousLesLaby.get(n));
         }
 
     }
@@ -37,9 +33,9 @@ public class LabyDess extends JPanel {
         boolean niveauTrouve = false;
     
         // Parcours de tous les labyrinthes
-        for (int n = 0; n < labyrinthe.TousLesLaby.size(); n++) {
+        for (int n = 0; n < Labyrinthe.TousLesLaby.size(); n++) {
             // Récupération de l'identifiant du niveau courant et nettoyage avec trim()
-            String niveauActuel = labyrinthe.TousLesLaby.get(n).get(0).trim();
+            String niveauActuel = Labyrinthe.TousLesLaby.get(n).get(0).trim();
             //System.out.println("Vérification niveau dans TousLesLaby : " + niveauActuel + " (Attendu : niv" + getNiveau() + ")");
     
             // Vérification de la correspondance avec le niveau attendu
@@ -48,7 +44,7 @@ public class LabyDess extends JPanel {
                 //System.out.println("Correspondance trouvée pour : " + niveauActuel);
     
                 // Extraction des données du labyrinthe pour ce niveau
-                List<String> niv_nLabyrinthe = labyrinthe.TousLesLaby.get(n);
+                List<String> niv_nLabyrinthe = Labyrinthe.TousLesLaby.get(n);
                 int hauteur = niv_nLabyrinthe.size() - 1; // -1 car la première ligne est le nom du niveau
                 int largeur = niv_nLabyrinthe.get(1).length();
     

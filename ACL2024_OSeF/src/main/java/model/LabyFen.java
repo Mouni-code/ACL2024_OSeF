@@ -1,18 +1,11 @@
 package model;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
 
 public class LabyFen {// pour tester à part. CETTE CLASSE NE SERT à RIEN.
     public static void main(String[] args) {
-        char[][] maze = {
-            {'#', '#', '#', '#', '#'},
-            {'S', ' ', ' ', ' ', '#'},
-            {'#', '#', '#', ' ', '#'},
-            {'#', ' ', ' ', ' ', 'E'},
-            {'#', '#', '#', '#', '#'}
-        };
-
         JFrame frame = new JFrame("Labyrinthe");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         

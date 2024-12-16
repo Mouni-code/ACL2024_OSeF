@@ -3,8 +3,6 @@ package model;
 public class Hero extends Element {
     
     int inventaire;
-    Treasure tresor;
-    Passage passage;
 
     public Hero(int x, int y, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int vx, int vy, int inventaire) {
         super( x,  y,  WIDTH,  HEIGHT);
@@ -17,28 +15,27 @@ public class Hero extends Element {
         inventaire = 0;
     }
 
-    // public void moveHero(String direction) {
-    //     switch (direction.trim().toUpperCase()) {
-    //         case "UP":
-    //             position.setY(position.getY() + 1);
-    //             break;
-    //         case "DOWN":
-    //             position.setY(position.getY() - 1);
-    //             break;
-    //         case "LEFT":
-    //             position.setX(position.getX() - 1);
-    //             break;
-    //         case "RIGHT":
-    //             position.setX(position.getX() + 1);
-    //             break;
-    //         default:
-    //             System.out.println("Direction non reconnue. Utilisez 'UP', 'DOWN', 'LEFT', 'RIGHT'.");
-    //             break;
-    //     }
-    // }
+    public void moveHero(String direction) {
+        switch (direction.trim().toUpperCase()) {
+            case "UP":
+                position.setY(position.getY() + 1);
+                break;
+            case "DOWN":
+                position.setY(position.getY() - 1);
+                break;
+            case "LEFT":
+                position.setX(position.getX() - 1);
+                break;
+            case "RIGHT":
+                position.setX(position.getX() + 1);
+                break;
+            default:
+                System.out.println("Direction non reconnue. Utilisez 'UP', 'DOWN', 'LEFT', 'RIGHT'.");
+                break;
+        }
+    }
 
-
-
+    @Override
     public int getinventaire(){
         return inventaire ;
     }
@@ -47,9 +44,4 @@ public class Hero extends Element {
         inventaire = val ;
     }
 
-   
-    
-
-
-    
 }

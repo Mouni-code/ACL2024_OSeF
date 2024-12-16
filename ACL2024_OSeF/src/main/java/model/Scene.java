@@ -17,7 +17,7 @@ public class Scene extends JPanel implements KeyListener {
 
     Hero hero = new Hero(100, 70, 40 , 40, 3, 100, 20, 50, 50,0);
     Monster monster = new Monster(350, 80, 40, 40, 1, 100, 20, 50, 50, false);
-    Monster monster2 = new Monster(400, 80, 50, 50, 1, 100, 20, 50,50, true);
+    Monster monster2 = new Monster(1060, 300, 50, 50, 1, 100, 20, 50,50, true);
     Ghost ghost1 = new Ghost(400, 400, 50, 50, 1, 100, 20, 10,10);
     Ghost ghost2 = new Ghost(600, 100,50, 50, 1, 100, 20, 10,10);
     Ghost ghost3 = new Ghost(200, 500, 50, 50, 1, 100, 20, 10,10);
@@ -28,47 +28,44 @@ public class Scene extends JPanel implements KeyListener {
     HashSet<Element> princesses = new HashSet<>();
     HashSet<Element> tresors = new HashSet<>();
     char[] directions = {'U', 'D', 'L', 'R'}; //up down left right
-    boolean gameOver = false;
     int tileSize = 40;
     int heroX = hero.startX;
     int heroY =  hero.startY;
-    int heroWidth = hero.WIDTH;
-    int heroHeight = hero.HEIGHT;
     int monsterX = monster.startX;
     int monsterY = monster.startY;
     int monsterHealth = monster.health;
     int ghost2X = ghost2.startX;
     int ghost2Y = ghost2.startY;
     int ghost2Health = ghost2.health;
-    private ImageIcon icofond;
-    private Image imagefond;
+    private final ImageIcon icofond;
+    private final Image imagefond;
 
-    private ImageIcon icohero;
-    private Image imagehero;
+    private final ImageIcon icohero;
+    private final Image imagehero;
 
-    private ImageIcon icomonstre;
-    private Image imagemonstre;
+    private final ImageIcon icomonstre;
+    private final Image imagemonstre;
 
-    private ImageIcon icoghost;
-    private Image imageghost;
+    private final ImageIcon icoghost;
+    private final Image imageghost;
 
     private final ImageIcon icoYouDied;
-    private Image imageYouDied;
+    private final Image imageYouDied;
 
     private final ImageIcon icoVictory;
-    private Image imageVictory;
+    private final Image imageVictory;
 
     private final ImageIcon icoPierre;
-    private Image imagePierre;
+    private final Image imagePierre;
 
-    private ImageIcon icotresor ;
-    private Image imagetresor;
+    private final ImageIcon icotresor ;
+    private final Image imagetresor;
 
-    private ImageIcon icopassage;
-    private Image imagepassage;
+    private final ImageIcon icopassage;
+    private final Image imagepassage;
 
-    private ImageIcon icoprincesse;
-    private Image imageprincesse;
+    private final ImageIcon icoprincesse;
+    private final Image imageprincesse;
     // Parcourir le labyrinthe et dessiner les murs
      
     int ghost1X = ghost1.startX;
@@ -80,43 +77,41 @@ public class Scene extends JPanel implements KeyListener {
     int heroHealth = hero.health;
     int heroMaxHealth = 100;
     int heroLives = hero.lives;
-    private int monsterMaxHealth = 100;
-    private int monster2X = monster2.startX;
-    private int monster2Y = monster2.startY;
+    private final int monsterMaxHealth = 100;
     private int monster2Health = monster2.health;
-    private int monster2MaxHealth = 100;
-    private int ghost1MaxHealth = 100;
-    private int[][] ghost1Targets = new int[5][2];
+    private final int monster2MaxHealth = 100;
+    private final int ghost1MaxHealth = 100;
+    private final int[][] ghost1Targets = new int[5][2];
     private int ghost1TargetIndex = 0;
-    private int ghost2MaxHealth = 100;
-    private int[][] ghost2Targets = new int[5][2];
+    private final int ghost2MaxHealth = 100;
+    private final int[][] ghost2Targets = new int[5][2];
     private int ghost2TargetIndex = 0;
-    private int ghost3MaxHealth = 100;
-    private int[][] ghost3Targets = new int[5][2];
+    private final int ghost3MaxHealth = 100;
+    private final int[][] ghost3Targets = new int[5][2];
     private int ghost3TargetIndex = 0;
 
     private static final int MAX_DISTANCE = 300;
     private static final int MAP_WIDTH = 800;
-    private static final int MAP_HEIGHT = 600;
     private static final int GHOST_STEP = 5;
 
-    Position heroPosition = new Position(heroX, heroY);
+    
+    private int currentLevel = 0;
+    private final boolean gameRunning = true;
+
 
     private boolean isCollision = false;
     private Timer collisionTimer;
-    private int collisionDuration = 500;
+    private final int collisionDuration = 500;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
-    private LabyDess labyDess= new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
+    private final LabyDess labyDess= new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
     public  char[][] map = labyDess.maze;
 
 
 
     public Scene() {
         super();
-
-      
         icofond = new ImageIcon(getClass().getResource("/images/fondecran.png"));
         this.imagefond = this.icofond.getImage();
 
@@ -150,35 +145,9 @@ public class Scene extends JPanel implements KeyListener {
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(this);
-
-        //public Character(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage)
-
         generateTreasurePoints(ghost1Targets, 1);
         generateTreasurePoints(ghost2Targets, 2);
         generateTreasurePoints(ghost3Targets, 3);
-        //Pas d'ici le pb!!
-        Timer moveTimer = new Timer(100, e -> {
-            // suivreHero(monster, monsterX, monsterY, false);
-            // suivreHero(monster2, monster2X, monster2Y, true);
-            char newDirection = directions[random.nextInt(4)];
-            updateDirection(newDirection, monster);
-            updateDirection(newDirection, monster2);
-
-            moveGhostToNextPoint(ghost1X, ghost1Y, ghost1Targets, ghost1TargetIndex, true, 1);
-            moveGhostToNextPoint(ghost2X, ghost2Y, ghost2Targets, ghost2TargetIndex, true, 2);
-            moveGhostToNextPoint(ghost3X, ghost3Y, ghost3Targets, ghost3TargetIndex, true, 3);
-
-           
-            if (monsterHealth > 0) attackHero(monster.x, monster.y);
-            if (monster2Health > 0) attackHero(monster2.x, monster2.y);
-            if (ghost1Health > 0) attackHero(ghost1.x, ghost1.y);
-            if (ghost2Health > 0) attackHero(ghost2.x, ghost2.y);
-            if (ghost3Health > 0) attackHero(ghost3.x, ghost3.y);
-
-            repaint();
-        });
-        moveTimer.start();
-    
     }
 
     public void init(){
@@ -196,13 +165,10 @@ public class Scene extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        
         char[][] maze = labyDess.getMaze();
         int cellSize = 40;
-
         g2.drawImage(this.imagefond, 0, 0, null);
-        drawLaby(g2, currentLevel);
-
+        drawLaby(currentLevel);
         if (heroLives <= 0) {
             int imageWidth = imageYouDied.getWidth(null);
             int imageHeight = imageYouDied.getHeight(null);
@@ -213,8 +179,6 @@ public class Scene extends JPanel implements KeyListener {
             g2.drawImage(this.imageYouDied, centerX, centerY, null);
             return;
         }
-
-    
             if(Liberee()){
                 int imageWidth = imageVictory.getWidth(null);
                 int imageHeight = imageVictory.getHeight(null);
@@ -225,11 +189,7 @@ public class Scene extends JPanel implements KeyListener {
                 g2.drawImage(this.imageVictory, centerX, centerY, null);
                 return;
             }
-        
-        
-
-        g2.drawImage(this.imagehero, hero.x, hero.y, hero.WIDTH, hero.HEIGHT, null);
-
+        g2.drawImage(this.imagehero, hero.x, hero.y, Element.WIDTH, Element.HEIGHT, null);
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[row].length; col++) {
                 if (maze[row][col] == '#') { // Cas des murs
@@ -260,18 +220,15 @@ public class Scene extends JPanel implements KeyListener {
                     g.drawImage(imageprincesse, x, y, 50, 50, this);
                     princesses.add(princesse);
                 }
-                
             }
         }
-
-
         if (monsterHealth > 0) {
-            g2.drawImage(this.imagemonstre, monsterX, monsterY, null);
-            drawMonsterHealthBar(g2, monsterX, monsterY, monsterHealth, monsterMaxHealth);
+            g2.drawImage(this.imagemonstre, monster.x, monster.y,80,50, null);
+            drawMonsterHealthBar(g2, monster.x, monster.y, monsterHealth, monsterMaxHealth);
         }
         if (monster2Health > 0) {
-            g2.drawImage(this.imagemonstre, monster2X, monster2Y,null);
-            drawMonsterHealthBar(g2, monster2X, monster2Y, monster2Health, monster2MaxHealth);
+            g2.drawImage(this.imagemonstre, monster2.x, monster2.y,80, 50, null);
+            drawMonsterHealthBar(g2, monster2.x, monster2.y, monster2Health, monster2MaxHealth);
         }
         if (ghost1Health > 0) {
             g2.drawImage(this.imageghost, ghost1X, ghost1Y, null);
@@ -285,7 +242,6 @@ public class Scene extends JPanel implements KeyListener {
             g2.drawImage(this.imageghost, ghost3X, ghost3Y, null);
             drawMonsterHealthBar(g2, ghost3X, ghost3Y, ghost3Health, ghost3MaxHealth);
         }
-
         drawHealthBar(g2);
         drawLives(g2);
     }
@@ -327,16 +283,6 @@ public class Scene extends JPanel implements KeyListener {
         }
     }
 
-    public void resetGame(){
-        hero.reset();
-        monster.reset();
-        monster.reset();
-        monster2.reset();
-        ghost1.reset();
-        ghost2.reset();
-        ghost3.reset();
-        hero.setinventaire(0);
-    }
 
     public boolean Liberee(){
         boolean ok = false;
@@ -368,41 +314,66 @@ public class Scene extends JPanel implements KeyListener {
                     System.out.println("La position du joueur a atteint celle du trésor");
                     hero.inventaire++;
                     tresor.setinventaireTresor(0);
-                    tresor.ramasse = true; // Mark the treasure as looted
+                    tresor.ramasse = true; 
                     System.out.println("l'inventaire est de : "+hero.inventaire+"etoiles");
-                    etoilesCollectees++; // Increment the number of collected stars
-                    if (etoilesCollectees >= 1) { // Check if the player has already collected 1 star
-                        break; // Exit the loop if the player has collected 1 star
+                    etoilesCollectees++;
+                    if (etoilesCollectees >= 1) { 
+                        break;
                     }
                 }
             }
         }
         return hero.inventaire;
     }
- 
-    
-    
-    
-    private int currentLevel = 0;
-    private boolean gameRunning = true;
-    private void drawLaby(Graphics2D g2, int lvl) {
+
+    public void resetGame(){
+        hero.reset();
+        monster.reset();
+        monster.reset();
+        monster2.reset();
+        ghost1.reset();
+        ghost2.reset();
+        ghost3.reset();
+        hero.setinventaire(0);
+    }
+
+    private void drawLaby(int lvl) {
         labyDess.setNiveau(lvl);
         Timer gameTimer = new Timer(100, e -> {
-            if (currentLevel <1 && gameRunning) {//Niveau 2 et 3 INDISPO
+            if (currentLevel < 1 && gameRunning) { // Niveau 2 et 3 INDISPO
                 labyDess.setNiveau(currentLevel);
-                repaint();
                 if (Success()) {
                     currentLevel++;
                     labyDess.setNiveau(currentLevel);
+                    char newDirection = directions[random.nextInt(4)];
+                    updateDirection(newDirection, monster);
+                    updateDirection(newDirection, monster2);
+                    suivreHero(monster, monster.x, monster.y, false);
+                    suivreHero(monster2, monster2.x, monster2.y, true);
                     resetGame();
                 }
-                
-                repaint();
+                updateVelocity(monster);
+                updateVelocity(monster2);
+                suivreHero(monster, monster.x, monster.y, false);
+                suivreHero(monster2, monster2.x, monster2.y, true);
+    
+                // //Déplacez les fantômes
+                // moveGhostToNextPoint(ghost1X, ghost1Y, ghost1Targets, ghost1TargetIndex, true, 1);
+                // moveGhostToNextPoint(ghost2X, ghost2Y, ghost2Targets, ghost2TargetIndex, true, 2);
+                // moveGhostToNextPoint(ghost3X, ghost3Y, ghost3Targets, ghost3TargetIndex, true, 3);
+               
+    
+                // Attaquez le héros si les monstres sont en vie
+                if (monsterHealth > 0) attackHero(monster.x, monster.y);
+                if (monster2Health > 0) attackHero(monster2.x, monster2.y);
+                if (ghost1Health > 0) attackHero(ghost1.x, ghost1.y);
+                if (ghost2Health > 0) attackHero(ghost2.x, ghost2.y);
+                if (ghost3Health > 0) attackHero(ghost3.x, ghost3.y);
             }
         });
-        gameTimer.start(); 
+        gameTimer.start();
     }
-
+    
     private void attackHero(int enemyX, int enemyY) {
         if (enemyX == monster.x && monsterHealth <= 0) return;
         if (enemyX == monster2.x && monster2Health <= 0) return;
@@ -421,27 +392,7 @@ public class Scene extends JPanel implements KeyListener {
         }
     }
     
-    private void pushHeroBack(int attackerX, int attackerY) {
-        int pushDistance = 20;
-    
-        
-        int newHeroX = heroX;
-        int newHeroY = heroY;
-    
-        if (attackerX < heroX) newHeroX += pushDistance;
-        else if (attackerX > heroX) newHeroX -= pushDistance;
-    
-        if (attackerY < heroY) newHeroY += pushDistance;
-        else if (attackerY > heroY) newHeroY -= pushDistance;
-    
-    
-        heroX = Math.max(0, Math.min(newHeroX, MAP_WIDTH - heroWidth));
-        heroY = Math.max(0, Math.min(newHeroY, MAP_HEIGHT - heroHeight));
-    }
-    
    // Méthode pour déplacer le monstre toutes les secondes (ou un autre intervalle)
-    // Method for moving the monsters
-
     private void startCollision() {
         isCollision = true;
         heroHealth = Math.max(0, heroHealth - 10);
@@ -515,13 +466,9 @@ public class Scene extends JPanel implements KeyListener {
             newGhostX += (dx / distance) * GHOST_STEP;
             newGhostY += (dy / distance) * GHOST_STEP;
         }
-
-        
         if (distance < GHOST_STEP * 2) {
             targetIndex = (targetIndex + 1) % targets.length;
         }
-
-        
         if (isGhost) {
             if (ghostNumber == 1) {
                 ghost1X = newGhostX;
@@ -546,21 +493,6 @@ public class Scene extends JPanel implements KeyListener {
         if (distanceX > MAX_DISTANCE || distanceY > MAX_DISTANCE) {
             return;
         }
-
-        // System.out.println("la vélocité en x du monstre c'est : "+ monster.x);
-        // monster.x += monster.velocityX;
-        // System.out.println("la vélocité 1en x c'est : "+ monster.velocityX);
-        // monster.y += monster.velocityY;
-        //   for(Element wall : murs){
-        //       if(collision(monster, wall)){
-        //         System.out.println("Collision faite");
-        //         monster.x -= monster.velocityX;
-        //         monster.y -= monster.velocityY;
-        //         System.out.println("la vélocité  2 en x c'est : "+ monster.velocityX);
-        //         break;
-        //       }
-        //   }
-
         if (currentMonsterX < heroX) currentMonsterX += 5;
         else currentMonsterX -= 5;
 
@@ -568,8 +500,6 @@ public class Scene extends JPanel implements KeyListener {
         else currentMonsterY -= 5;
 
         if (isSecondMonster) {
-            monster2X = currentMonsterX;
-            monster2Y = currentMonsterY;
         } else {
             monsterX = currentMonsterX;
             monsterY = currentMonsterY;
@@ -586,7 +516,7 @@ public class Scene extends JPanel implements KeyListener {
     public void updateDirection(char direction, Element element) {
         char prevDirection = element.direction;
         element.direction = direction;
-        updateVelocity();
+        updateVelocity(element);
         element.x += element.velocityX;
         element.y += element.velocityY;
         for (Element wall : murs) {
@@ -595,59 +525,64 @@ public class Scene extends JPanel implements KeyListener {
                     element.x -= element.velocityX;
                      element.y -= element.velocityY;
                      element.direction = prevDirection;
-                     updateVelocity();
+                     updateVelocity(element);
                     break;
                  }
               }
        
     }
-
-     void updateVelocity() {
-        if(hero.direction == 'U'){
-            hero.velocityX = 0;
-            hero.velocityY = - tileSize/4;
-        }
-        else if(hero.direction == 'D'){
-            hero.velocityX = 0;
-            hero.velocityY = tileSize/4;
-        }
-        else if(hero.direction == 'L'){
-            hero.velocityX = -tileSize/4;
-            hero.velocityY = 0;
-        }
-        else if(hero.direction == 'R'){
-            hero.velocityX = +tileSize/4;
-            hero.velocityY = 0;
+     void updateVelocity(Element element) {
+        switch (element.direction) {
+            case 'U':
+                element.velocityX = 0;
+                element.velocityY = - tileSize/4;
+                break;
+            case 'D':
+                element.velocityX = 0;
+                element.velocityY = tileSize/4;
+                break;
+            case 'L':
+                element.velocityX = -tileSize/4;
+                element.velocityY = 0;
+                break;
+            case 'R':
+                element.velocityX = +tileSize/4;
+                element.velocityY = 0;
+                break;
+            default:
+                break;
         }
     }
     public void move(){
+        Monster[] monsters = {monster, monster2};
         hero.x += hero.velocityX;
         hero.y += hero.velocityY;
           for(Element wall : murs){
               if(collision(hero, wall)){
-                System.out.println("Collision faite");
                 hero.x -= hero.velocityX;
                 hero.y -= hero.velocityY;
-                System.out.println("la vélocité  2 en x c'est : "+ hero.velocityX);
                 break;
               }
           }
+          for(Monster monster : monsters){
             if (collision(monster, hero)) {
                 attackHero(monster.x , monster.y);
             }
-            if (monster.y == tileSize*9 && monster.direction != 'U' && monster.direction != 'D') {
-                updateDirection('U', monster);
-            }
+            // if (monster.y == tileSize*9 && monster.direction != 'U' && monster.direction != 'D') {
+            //     updateDirection('U', monster);
+            // }
             monster.x += monster.velocityX;
             monster.y += monster.velocityY;
             for (Element wall : murs) {
-                if (collision(monster, wall) || monster.x <= 0 || monster.x + monster.WIDTH >= 1160) {
+                if (collision(monster, wall) || monster.x <= 0 || monster.x + monster.WIDTH >= MAP_WIDTH) {
                     monster.x -= monster.velocityX;
                     monster.y -= monster.velocityY;
                     char newDirection = directions[random.nextInt(4)];
                     updateDirection(newDirection, monster);
                 }
             }
+
+          }
             if (collision(monster2, hero)) {
                 attackHero(monster2.x , monster2.y);
             }
@@ -666,11 +601,11 @@ public class Scene extends JPanel implements KeyListener {
             }
     }
     
-    public void resetPositions(){
-        hero.reset();
-        hero.velocityX = 0;
-        hero.velocityY = 0;
-    }
+    // public void resetPositions(){
+    //     hero.reset();
+    //     monster.reset();
+    //     monster2.reset();
+    // }
 
     public void actionPerformed(ActionEvent e) {
         move();
@@ -678,49 +613,21 @@ public class Scene extends JPanel implements KeyListener {
     }
     @Override
     public void keyPressed(KeyEvent e) {
-    }
-    
-
-    private void heroAttack() {
-        // Réduire la santé uniquement si le monstre est vivant
-        if (Math.abs(monsterX - heroX) < 50 && Math.abs(monsterY - heroY) < 50 && monsterHealth > 0) {
-            monsterHealth = Math.max(0, monsterHealth - 20);
-        }
-        if (Math.abs(monster2X - heroX) < 50 && Math.abs(monster2Y - heroY) < 50 && monster2Health > 0) {
-            monster2Health = Math.max(0, monster2Health - 20);
-        }
-        if (Math.abs(ghost1X - heroX) < 50 && Math.abs(ghost1Y - heroY) < 50 && ghost1Health > 0) {
-            ghost1Health = Math.max(0, ghost1Health - 20);
-        }
-        if (Math.abs(ghost2X - heroX) < 50 && Math.abs(ghost2Y - heroY) < 50 && ghost2Health > 0) {
-            ghost2Health = Math.max(0, ghost2Health - 20);
-        }
-        if (Math.abs(ghost3X - heroX) < 50 && Math.abs(ghost3Y - heroY) < 50 && ghost3Health > 0) {
-            ghost3Health = Math.max(0, ghost3Health - 20);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             updateDirection('U', hero);
             move();
-            repaint();
         }
         else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             updateDirection('D', hero);
             move();
-            repaint();
         }
         else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             updateDirection('L', hero);
             move();
-            repaint();
         }
         else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             updateDirection('R', hero);
             move();
-            repaint();
         }
         else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             heroAttack();
@@ -731,6 +638,30 @@ public class Scene extends JPanel implements KeyListener {
         else if (e.getKeyCode() == KeyEvent.VK_P) {
             Success();
         }
+    }
+    
+
+    private void heroAttack() {
+        // Réduire la santé uniquement si le monstre est vivant
+        if (Math.abs(monster.x - hero.x) < 50 && Math.abs(monster.y - hero.y) < 50 && monsterHealth > 0) {
+            monsterHealth = Math.max(0, monsterHealth - 20);
+        }
+        if (Math.abs(monster2.x - hero.x) < 50 && Math.abs(monster2.y - hero.y) < 50 && monster2Health > 0) {
+            monster2Health = Math.max(0, monster2Health - 20);
+        }
+        if (Math.abs(ghost1.x - hero.x) < 50 && Math.abs(ghost1.y - hero.y) < 50 && ghost1Health > 0) {
+            ghost1Health = Math.max(0, ghost1Health - 20);
+        }
+        if (Math.abs(ghost2.x - hero.x) < 50 && Math.abs(ghost2.y - hero.y) < 50 && ghost2Health > 0) {
+            ghost2Health = Math.max(0, ghost2Health - 20);
+        }
+        if (Math.abs(ghost3.x - hero.x) < 50 && Math.abs(ghost3.y - hero.y) < 50 && ghost3Health > 0) {
+            ghost3Health = Math.max(0, ghost3Health - 20);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
         
     }
 

@@ -1,17 +1,18 @@
 package engine ;
 
-import java.util.ArrayList;
-import java.util.List ;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.KeyListener ;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
 
 public class GlobalKeyListener implements KeyListener {
     public List<Integer> direction ;
-    private int n ;
+    private final int n ;
 
     public GlobalKeyListener() {
-        direction = new ArrayList<Integer>() ;
+        direction = new ArrayList<>() ;
         direction.add(-1) ;
         n = direction.size() ;
         // Créer une fenêtre invisible pour capturer les événements clavier
@@ -42,9 +43,5 @@ public class GlobalKeyListener implements KeyListener {
     public void keyTyped(KeyEvent e) {
         //direction.add(e.getKeyCode()) ;
         // Cette méthode n'est généralement pas utilisée pour l'écoute globale
-    }
-
-    public static void main(String[] args) {
-        List<Integer> a = (new GlobalKeyListener()).direction ;
     }
 }  
