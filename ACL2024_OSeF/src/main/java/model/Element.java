@@ -14,6 +14,10 @@ public class Element {
     char direction = 'U'; // U: Up, D: Down, L: Left, R: Right
     int velocityX = 0;
      int velocityY = 0;
+     public boolean ramasse = false;
+     int inventaireTresor = 1;
+     boolean delivered = false;
+
 
     public Scene scene;
 
@@ -48,4 +52,15 @@ public class Element {
     public void setLives(int lives) {
         this.lives = lives;
     }
+    
+
+    public int getinventaire(){
+        return inventaireTresor ;
+    }
+
+    public void setinventaireTresor( int val ){
+        inventaireTresor = val ;
+    }
+
+   
 }

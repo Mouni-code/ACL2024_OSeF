@@ -47,18 +47,9 @@ public class Hero extends Element {
         inventaire = val ;
     }
 
-    public void remplirInventaire(){
-        if (startX == tresor.position.getX() && startY == tresor.position.getY()){
-            inventaire++;
-            System.out.println("L'inventaire est :"+ inventaire + " étoile(s)");
-        }
-    }
+   
     
-    public boolean pouvoirPassage(){
-        if (startX == passage.position.getX() && startY == passage.position.getY() && inventaire == 2){
-            System.out.println("Il peut passer");
-            return true;
-        }
-        return false;
-    }
+
+
+    
 }

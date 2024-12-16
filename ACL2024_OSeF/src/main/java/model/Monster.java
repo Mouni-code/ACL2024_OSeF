@@ -1,15 +1,18 @@
 package model;
 
 public class Monster extends Element {
-    private boolean isIntelligent;
-    private int speed;
+     boolean isIntelligent;
+     int speedx;
+     int speedy;
 
-    public Monster(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int speed, boolean isIntelligent) {
+
+    public Monster(int startX, int startY, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int speedx, int speedy, boolean isIntelligent) {
         super( startX,  startY,  WIDTH,  HEIGHT);
         this.position = new Position(startX, startY);
         this.health = 100;
         this.damage = 15;
-        this.speed = 1;
+        this.speedx = speedx;
+        this.speedy = speedy;
         this.isIntelligent = isIntelligent;
     }
 
