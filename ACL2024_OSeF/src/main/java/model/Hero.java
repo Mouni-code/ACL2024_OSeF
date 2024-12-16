@@ -15,6 +15,10 @@ public class Hero extends Element {
         
         inventaire = 0;
     }
+
+    public Hero(int x, int y, int width, int height){
+        super(x, y, width, height);
+    }
     public void getPosition() {
     }
     
