@@ -38,12 +38,13 @@ L'objectif principal est de guider le héros à travers **deux labyrinthes** suc
 1. **Clonez le projet** depuis le dépôt GitHub :  
    ```bash
    git clone https://github.com/Mouni-code/ACL2024_OSeF.git
-  ```
+   ```
+
 2. **Accédez au dossier du projet** :
 
  ```bash
 cd ACL2024_OSeF
-```
+ ```
 
 3. **Compilez le projet avec Maven pour générer le fichier JAR** :
 
