@@ -1,11 +1,12 @@
 package model;
 
 public class Hero extends Element {
-    
+    public Position position;
     int inventaire;
 
     public Hero(int x, int y, int characterWIDTH, int characterHEIGHT, int lives, int health, int damage, int vx, int vy, int inventaire) {
         super( x,  y,  WIDTH,  HEIGHT);
+        this.position = new Position(x, y);
         this.lives = lives;
         this.health = health;
         this.damage = health;
@@ -14,8 +15,11 @@ public class Hero extends Element {
         
         inventaire = 0;
     }
+    public void getPosition() {
+    }
+    
 
-    public void moveHero(String direction) {
+    public void move(String direction) {
         switch (direction.trim().toUpperCase()) {
             case "UP":
                 position.setY(position.getY() + 1);

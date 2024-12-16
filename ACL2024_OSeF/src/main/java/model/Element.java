@@ -7,8 +7,8 @@ public class Element {
     public static int WIDTH;
     public static int HEIGHT;
     public Position position;
-     int x;
-     int y;
+     public int x;
+     public int y;
       int startX;
       int startY;
     char direction = 'U'; // U: Up, D: Down, L: Left, R: Right
