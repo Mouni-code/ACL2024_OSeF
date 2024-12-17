@@ -105,7 +105,7 @@ public class Scene extends JPanel implements KeyListener {
 
     private final Random random = new Random();
 
-    private final LabyDess labyDess= new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/java/model/Laby"));
+    public final LabyDess labyDess= new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/resources/Laby"));
     public  char[][] map = labyDess.maze;
 
 
@@ -145,9 +145,29 @@ public class Scene extends JPanel implements KeyListener {
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(this);
+        
         generateTreasurePoints(ghost1Targets, 1);
         generateTreasurePoints(ghost2Targets, 2);
         generateTreasurePoints(ghost3Targets, 3);
+
+        Timer moveTimer = new Timer(100, e -> {
+            suivreHero(monster,monster.x, monster.y, false);
+            suivreHero(monster2, monster2.x, monster2.y, true);
+
+            moveGhostToNextPoint(ghost1X, ghost1Y, ghost1Targets, ghost1TargetIndex, true, 1);
+            moveGhostToNextPoint(ghost2X, ghost2Y, ghost2Targets, ghost2TargetIndex, true, 2);
+            moveGhostToNextPoint(ghost3X, ghost3Y, ghost3Targets, ghost3TargetIndex, true, 3);
+
+           
+            if (monsterHealth > 0) attackHero(monster.x, monster.y);
+            if (monster2Health > 0) attackHero(monster2.x, monster2.y);
+            if (ghost1Health > 0) attackHero(ghost1X, ghost1Y);
+            if (ghost2Health > 0) attackHero(ghost2X, ghost2Y);
+            if (ghost3Health > 0) attackHero(ghost3X, ghost3Y);
+
+            repaint();
+        });
+        moveTimer.start();
     }
 
     public void init(){
@@ -157,8 +177,6 @@ public class Scene extends JPanel implements KeyListener {
         System.out.println("Ghost1 : (" + ghost1X + ", " + ghost1Y + ")");
         System.out.println("Ghost2 : (" + ghost2X + ", " + ghost2Y + ")");
         System.out.println("Ghost3 : (" + ghost3X + ", " + ghost3Y + ")");
-        System.out.println("nombre de vie:"+ heroLives);
-
     }
 
     @Override
@@ -305,6 +323,9 @@ public class Scene extends JPanel implements KeyListener {
         }
         return false;
     }
+    public void  passage(){
+        if(Success() && etoiles()==2) labyDess.setNiveau(1);
+    }
     //A regler, il prend toujours du même trésor
     public int etoiles() {
         int etoilesCollectees = 0;
@@ -329,51 +350,58 @@ public class Scene extends JPanel implements KeyListener {
     public void resetGame(){
         hero.reset();
         monster.reset();
-        monster.reset();
+        // monster.reset();
         monster2.reset();
         ghost1.reset();
-        ghost2.reset();
+         ghost2.reset();
         ghost3.reset();
         hero.setinventaire(0);
     }
 
     private void drawLaby(int lvl) {
         labyDess.setNiveau(lvl);
-        Timer gameTimer = new Timer(100, e -> {
-            if (currentLevel < 1 && gameRunning) { // Niveau 2 et 3 INDISPO
-                labyDess.setNiveau(currentLevel);
-                if (Success()) {
-                    currentLevel++;
-                    labyDess.setNiveau(currentLevel);
-                    char newDirection = directions[random.nextInt(4)];
-                    updateDirection(newDirection, monster);
-                    updateDirection(newDirection, monster2);
-                    suivreHero(monster, monster.x, monster.y, false);
-                    suivreHero(monster2, monster2.x, monster2.y, true);
-                    resetGame();
-                }
-                updateVelocity(monster);
-                updateVelocity(monster2);
-                suivreHero(monster, monster.x, monster.y, false);
-                suivreHero(monster2, monster2.x, monster2.y, true);
+        //passage();
+        // if (currentLevel < 1 && gameRunning) { // Niveau 2 et 3 INDISPO
+        //             labyDess.setNiveau(currentLevel);
+        //             if (Success()) {
+        //                 currentLevel++;
+        //                  labyDess.setNiveau(currentLevel);
+        // }
+        // Timer gameTimer = new Timer(100, e -> {
+        //     if (currentLevel < 1 && gameRunning) { // Niveau 2 et 3 INDISPO
+        //         labyDess.setNiveau(currentLevel);
+        //         if (Success()) {
+        //             currentLevel++;
+        //              labyDess.setNiveau(currentLevel);
+        //             // char newDirection = directions[random.nextInt(4)];
+        //             // updateDirection(newDirection, monster);
+        //             // updateDirection(newDirection, monster2);
+        //             // suivreHero(monster, monster.x, monster.y, false);
+        //             // suivreHero(monster2, monster2.x, monster2.y, true);
+        //             resetGame();
+        //         }
+        //         // updateVelocity(monster);
+        //         // updateVelocity(monster2);
+        //         // suivreHero(monster, monster.x, monster.y, false);
+        //         // suivreHero(monster2, monster2.x, monster2.y, true);
     
-                // //Déplacez les fantômes
-                // moveGhostToNextPoint(ghost1X, ghost1Y, ghost1Targets, ghost1TargetIndex, true, 1);
-                // moveGhostToNextPoint(ghost2X, ghost2Y, ghost2Targets, ghost2TargetIndex, true, 2);
-                // moveGhostToNextPoint(ghost3X, ghost3Y, ghost3Targets, ghost3TargetIndex, true, 3);
+        //         // //Déplacez les fantômes
+        //         // moveGhostToNextPoint(ghost1X, ghost1Y, ghost1Targets, ghost1TargetIndex, true, 1);
+        //         // moveGhostToNextPoint(ghost2X, ghost2Y, ghost2Targets, ghost2TargetIndex, true, 2);
+        //         // moveGhostToNextPoint(ghost3X, ghost3Y, ghost3Targets, ghost3TargetIndex, true, 3);
                
     
-                // Attaquez le héros si les monstres sont en vie
-                if (monsterHealth > 0) attackHero(monster.x, monster.y);
-                if (monster2Health > 0) attackHero(monster2.x, monster2.y);
-                if (ghost1Health > 0) attackHero(ghost1.x, ghost1.y);
-                if (ghost2Health > 0) attackHero(ghost2.x, ghost2.y);
-                if (ghost3Health > 0) attackHero(ghost3.x, ghost3.y);
-            }
-        });
-        gameTimer.start();
+        //         // Attaquez le héros si les monstres sont en vie
+        //         // if (monsterHealth > 0) attackHero(monster.x, monster.y);
+        //         // if (monster2Health > 0) attackHero(monster2.x, monster2.y);
+        //         // if (ghost1Health > 0) attackHero(ghost1.x, ghost1.y);
+        //         // if (ghost2Health > 0) attackHero(ghost2.x, ghost2.y);
+        //         // if (ghost3Health > 0) attackHero(ghost3.x, ghost3.y);
+        //     }
+        // });
+        // gameTimer.start();
     }
-    
+
     private void attackHero(int enemyX, int enemyY) {
         if (enemyX == monster.x && monsterHealth <= 0) return;
         if (enemyX == monster2.x && monster2Health <= 0) return;

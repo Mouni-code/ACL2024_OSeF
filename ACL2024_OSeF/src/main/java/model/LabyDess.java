@@ -11,7 +11,7 @@ public class LabyDess extends JPanel {
     public Hero hero ;
     private Labyrinthe labyrinthe ;
     private int niv ;
-    private char[][] maze ; // labyrinthe actuel
+    public char[][] maze ; // labyrinthe actuel
     private int cellSize = 20 ; // Taille de chaque cellule en pixels
 
     public LabyDess(Labyrinthe obj) { //prend un tableau 2D de caractères (char[][]) représentant le labyrinthe
