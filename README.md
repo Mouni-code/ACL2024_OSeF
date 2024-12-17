@@ -55,6 +55,11 @@ mvn clean package
 ACL2024_OSeF-0.0.1-SNAPSHOT.jar.
 
 ### ▶️ Exécution du Jeu
+Avant d'exécuter le jeu, dans la classe Scene, et dans la ligne (108) :
+```java
+public final LabyDess labyDess= new LabyDess(new Labyrinthe("C:/Users/Mouna/OneDrive/Desktop/ACL2024_OSeF/ACL2024_OSeF/src/main/resources/Laby"));
+```
+Remplace le path par là où se trouve ton dossier Laby(copy path en clique droit dessus).
 Depuis le répertoire du projet ou directement dans le dossier target, exécutez la commande suivante :
 
 ```bash
