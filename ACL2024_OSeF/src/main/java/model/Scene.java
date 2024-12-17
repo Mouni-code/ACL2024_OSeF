@@ -105,7 +105,7 @@ public class Scene extends JPanel implements KeyListener {
 
     private final Random random = new Random();
 
-    public final LabyDess labyDess= new LabyDess(new Labyrinthe("ACL2024_OSeF/src/main/resources/Laby"));
+    public final LabyDess labyDess= new LabyDess(new Labyrinthe("C:/Users/Mouna/OneDrive/Desktop/ACL2024_OSeF/ACL2024_OSeF/src/main/resources/Laby"));
     public  char[][] map = labyDess.maze;
 
 
@@ -152,7 +152,7 @@ public class Scene extends JPanel implements KeyListener {
 
         Timer moveTimer = new Timer(100, e -> {
             suivreHero(monster,monster.x, monster.y, false);
-            suivreHero(monster2, monster2.x, monster2.y, true);
+            //suivreHero(monster2, monster2.x, monster2.y, true);
 
             moveGhostToNextPoint(ghost1X, ghost1Y, ghost1Targets, ghost1TargetIndex, true, 1);
             moveGhostToNextPoint(ghost2X, ghost2Y, ghost2Targets, ghost2TargetIndex, true, 2);
@@ -161,7 +161,7 @@ public class Scene extends JPanel implements KeyListener {
            
             if (monsterHealth > 0) attackHero(monster.x, monster.y);
             if (monster2Health > 0) attackHero(monster2.x, monster2.y);
-            if (ghost1Health > 0) attackHero(ghost1X, ghost1Y);
+             if (ghost1Health > 0) attackHero(ghost1X, ghost1Y);
             if (ghost2Health > 0) attackHero(ghost2X, ghost2Y);
             if (ghost3Health > 0) attackHero(ghost3X, ghost3Y);
 
@@ -367,19 +367,19 @@ public class Scene extends JPanel implements KeyListener {
         //                 currentLevel++;
         //                  labyDess.setNiveau(currentLevel);
         // }
-        // Timer gameTimer = new Timer(100, e -> {
-        //     if (currentLevel < 1 && gameRunning) { // Niveau 2 et 3 INDISPO
-        //         labyDess.setNiveau(currentLevel);
-        //         if (Success()) {
-        //             currentLevel++;
-        //              labyDess.setNiveau(currentLevel);
-        //             // char newDirection = directions[random.nextInt(4)];
-        //             // updateDirection(newDirection, monster);
-        //             // updateDirection(newDirection, monster2);
-        //             // suivreHero(monster, monster.x, monster.y, false);
-        //             // suivreHero(monster2, monster2.x, monster2.y, true);
-        //             resetGame();
-        //         }
+        Timer gameTimer = new Timer(100, e -> {
+            if (currentLevel < 1 && gameRunning) { // Niveau 2 et 3 INDISPO
+                labyDess.setNiveau(currentLevel);
+                if (Success()) {
+                    currentLevel++;
+                     labyDess.setNiveau(currentLevel);
+                    // char newDirection = directions[random.nextInt(4)];
+                    // updateDirection(newDirection, monster);
+                    // updateDirection(newDirection, monster2);
+                    // suivreHero(monster, monster.x, monster.y, false);
+                    // suivreHero(monster2, monster2.x, monster2.y, true);
+                    resetGame();
+                }
         //         // updateVelocity(monster);
         //         // updateVelocity(monster2);
         //         // suivreHero(monster, monster.x, monster.y, false);
@@ -397,9 +397,9 @@ public class Scene extends JPanel implements KeyListener {
         //         // if (ghost1Health > 0) attackHero(ghost1.x, ghost1.y);
         //         // if (ghost2Health > 0) attackHero(ghost2.x, ghost2.y);
         //         // if (ghost3Health > 0) attackHero(ghost3.x, ghost3.y);
-        //     }
-        // });
-        // gameTimer.start();
+             }
+ });
+         gameTimer.start();
     }
 
     private void attackHero(int enemyX, int enemyY) {
@@ -628,6 +628,7 @@ public class Scene extends JPanel implements KeyListener {
                 }
             }
     }
+    
     
     // public void resetPositions(){
     //     hero.reset();
