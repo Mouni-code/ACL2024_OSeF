@@ -1,53 +1,85 @@
-# Jeu de Labyrinthe - Version Texte (v0)
-## Description du Projet
-Ce projet est un jeu de labyrinthe en version texte où un héros, en quête de sauver sa princesse, traverse plusieurs labyrinthes pour la retrouver. Dans cette première version (v0), le jeu permet de contrôler le mouvement du héros à l'aide d'un fichier JAR exécutable.
+# 🎮 **Jeu de Labyrinthe - Version Finale**  
+### *"Partez à l'aventure pour sauver la princesse !"*  
 
-## Principe du Jeu
-L'objectif principal du jeu est de guider le héros à travers quatre labyrinthes. Dans chaque labyrinthe, le héros doit :
-- Combattre des monstres pour passer au labyrinthe suivant.
-- Accumuler de l'expérience (EXP) et de la magie pour renforcer ses capacités de combat.
-- Trouver des trésors qui lui apporteront des avantages supplémentaires.
-À chaque labyrinthe, le héros affronte des monstres de plus en plus puissants. Une fois arrivé dans le dernier labyrinthe, il devra combattre un monstre final. Pour remporter ce combat et sauver la princesse, le héros doit avoir accumulé suffisamment d'expérience et de magie.
+## 🚀 **Description du Projet**  
+Ce projet est un jeu de labyrinthe où un héros, en quête de sauver sa princesse, traverse plusieurs niveaux remplis de défis. Le joueur guide le héros pour combattre des monstres, collecter des trésors et gagner des étoiles indispensables pour progresser dans l'aventure. Le jeu est livré sous forme de fichier JAR exécutable avec des mécaniques enrichies.
 
-## Structure des Versions
-- Version actuelle (v0) : Version texte. Elle permet de déplacer le héros dans le labyrinthe en utilisant des commandes directionnelles.
-- Version future : Une version avec interface graphique est envisagée, ainsi que des mécaniques de combat et des éléments supplémentaires de gameplay.
-## Installation et Exécution du Jeu
-### Prérequis
-- Java 17 (ou version ultérieure) doit être installé sur votre machine.
-- Maven (pour la compilation du projet si nécessaire).
-### Compilation du Projet
-- Clonez le projet depuis le dépôt GitHub :
+---
 
-```bash
-git clone https://github.com/Mouni-code/ACL2024_OSeF.git
-``` 
-- Accédez au dossier du projet :
+## 🕹️ **Principe du Jeu**  
+L'objectif principal est de guider le héros à travers **deux labyrinthes** successifs :  
 
-```bash
+- **Combattre des monstres** pour libérer le chemin.  
+- **Collecter des trésors** qui vous offriront des **étoiles**.  
+- **Progression** : Pour accéder au labyrinthe suivant, le héros doit impérativement récolter **deux étoiles**.  
+- **Finalité** : Dans le dernier niveau, vous aurez la chance de **sauver la princesse** !  
+
+---
+
+## 📦 **Structure des Versions**  
+### Version Actuelle  
+- **Interface graphique** interactive.  
+- **Mécaniques de gameplay** :  
+   - **Déplacements** avec les touches directionnelles *(Haut, Bas, Gauche, Droite)*.  
+   - **Attaques** contre les monstres avec la touche **Espace**.  
+   - **Collecte des étoiles** avec la touche **G**.  
+
+---
+
+## ⚙️ **Installation et Exécution du Jeu**  
+
+### 📋 **Prérequis**  
+- **Java 17** (ou version ultérieure) installé sur votre machine.  
+- **Maven** (optionnel, pour recompiler le projet).  
+
+---
+
+### 🛠️ **Compilation du Projet**  
+1. **Clonez le projet** depuis le dépôt GitHub :  
+   ```bash
+   git clone https://github.com/Mouni-code/ACL2024_OSeF.git
+   ```
+
+2. **Accédez au dossier du projet** :
+
+ ```bash
 cd ACL2024_OSeF
-cd ACL2024_OSeF
-```
-- Compilez le projet et générez le fichier JAR :
+ ```
+
+3. **Compilez le projet avec Maven pour générer le fichier JAR** :
 
 ```bash
 mvn clean package
 ```
-Le fichier JAR sera créé dans le dossier target/ sous le nom ACL2024_OSeF-0.0.1-SNAPSHOT.jar.
+- Le fichier JAR sera disponible dans le dossier target/ sous le nom :
+ACL2024_OSeF-0.0.1-SNAPSHOT.jar.
 
-- Exécution du Jeu
-Pour lancer le jeu, exécutez la commande suivante depuis le répertoire racine du projet ou à partir du dossier target où se trouve le fichier JAR :
+### ▶️ Exécution du Jeu
+Depuis le répertoire du projet ou directement dans le dossier target, exécutez la commande suivante :
 
 ```bash
 java -jar target/ACL2024_OSeF-0.0.1-SNAPSHOT.jar
 ```
-Le jeu se lancera en mode console, et vous pourrez contrôler le héros en entrant des commandes de déplacement (UP, DOWN, LEFT, RIGHT).
+Le jeu se lance alors dans une fenêtre graphique, prêt à être joué !
 
-## Instructions de Jeu
-- Déplacement : Utilisez les commandes UP, DOWN, LEFT, RIGHT pour déplacer le héros dans le labyrinthe.
-- Objectif : Explorez chaque labyrinthe, gagnez de l'EXP, trouvez des trésors et de la magie, et battez les monstres qui s'y trouvent.
-- Progression : À la fin de chaque labyrinthe, si vous avez accumulé suffisamment d'expérience et de magie, vous pouvez accéder au labyrinthe suivant. Dans le dernier labyrinthe, affrontez le monstre final pour sauver la princesse.
-## À venir
-- Combats améliorés : Système de combat avec les monstres.
-- Gains d'EXP et objets : Possibilité de gagner des objets, trésors, et magie pour améliorer les capacités du héros.
-- Interface graphique : Une version graphique du jeu pour une expérience utilisateur plus immersive.
+### 🎮 Instructions de Jeu
+- **Déplacement** : Utilisez les touches UP, DOWN, LEFT, RIGHT pour déplacer le héros.
+- **Attaque** : Appuyez sur ESPACE pour attaquer les monstres.
+- **Collecte d'étoiles** : Appuyez sur G pour ramasser des trésors et collecter des étoiles.
+#### Objectif :
+Explorez chaque labyrinthe.
+Combattez les monstres et collectez deux étoiles pour accéder au niveau suivant.
+Sauvez la princesse dans le dernier labyrinthe !
+
+### 🌟 Améliorations Futures
+Voici des fonctionnalités qui pourraient enrichir le jeu :
+
+- **Boss final** : Ajout d'un combat épique contre un boss pour conclure l'aventure.
+- **Système d'EXP** : Gagnez des points d'expérience pour améliorer les compétences du héros.
+- **Objets et Magie** : Collectez des objets et des sorts pour faciliter les combats.
+-**Nouveaux niveaux** : Ajout d'autres labyrinthes plus complexes pour prolonger le défi.
+
+### 🏁 Bon jeu et amusez-vous bien ! 🏰
+
+
+
